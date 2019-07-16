@@ -8,17 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Day6 | 十元</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="智联招聘数据爬取利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：   自己的代码： import requests import json from bs4 import BeautifulSoup  url=&amp;apos;https://fe-api.zhaopin.com/c/i/sou?pageSiz">
+  <meta name="description" content="智联招聘数据爬取利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：">
+<meta name="keywords" content="python,爬虫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day6">
 <meta property="og:url" content="http://yoursite.com/2019/07/15/Day6/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="智联招聘数据爬取利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：   自己的代码： import requests import json from bs4 import BeautifulSoup  url=&amp;apos;https://fe-api.zhaopin.com/c/i/sou?pageSiz">
+<meta property="og:description" content="智联招聘数据爬取利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-16T10:21:33.079Z">
+<meta property="og:updated_time" content="2019-07-16T10:59:52.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day6">
-<meta name="twitter:description" content="智联招聘数据爬取利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：   自己的代码： import requests import json from bs4 import BeautifulSoup  url=&amp;apos;https://fe-api.zhaopin.com/c/i/sou?pageSiz">
+<meta name="twitter:description" content="智联招聘数据爬取利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：">
   
     <link rel="alternative" href="/atom.xml" title="十元" type="application/atom+xml">
   
@@ -172,6 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="智联招聘数据爬取"><a href="#智联招聘数据爬取" class="headerlink" title="智联招聘数据爬取"></a>智联招聘数据爬取</h3><p>利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：  </p>
+<a id="more"></a>
 <p><strong>自己的代码：</strong></p>
 <pre><code>import requests
 import json
@@ -342,13 +344,28 @@ if __name__==&apos;__main__&apos;:
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        			<a href="/public/categories/大数据//" class="article-tag-list-link color4">大数据</a>
         		</li>
       		
 		</ul>
@@ -448,6 +465,19 @@ if __name__==&apos;__main__&apos;:
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#智联招聘数据爬取"><span class="toc-number">1.</span> <span class="toc-text">智联招聘数据爬取</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -496,7 +526,7 @@ if __name__==&apos;__main__&apos;:
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -577,6 +607,38 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mapreduce</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hive</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -637,6 +699,8 @@ MathJax.Hub.Queue(function() {
 
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">爱生活爱自己</div>
   	  	
     	</section>
     

@@ -8,17 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Day2 | 十元</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.看windows和linux能否相互ping通Linux下用ifconfig查看ip是否正常不正常的话vi /etc/sysconfig/network-scripts/ifcfg-ens33（可用TAB自动补全）查看网卡配置文件文件中的onboot=yes开机自启动  no 开机不启动   2.修改hostname主机名称vi /etc/sysconfig/network编辑HOSTNAME">
+  <meta name="description" content="1.看windows和linux能否相互ping通Linux下用ifconfig查看ip是否正常不正常的话vi /etc/sysconfig/network-scripts/ifcfg-ens33（可用TAB自动补全）查看网卡配置文件文件中的onboot=yes开机自启动  no 开机不启动">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day2">
 <meta property="og:url" content="http://yoursite.com/2019/07/11/Day2/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="1.看windows和linux能否相互ping通Linux下用ifconfig查看ip是否正常不正常的话vi /etc/sysconfig/network-scripts/ifcfg-ens33（可用TAB自动补全）查看网卡配置文件文件中的onboot=yes开机自启动  no 开机不启动   2.修改hostname主机名称vi /etc/sysconfig/network编辑HOSTNAME">
+<meta property="og:description" content="1.看windows和linux能否相互ping通Linux下用ifconfig查看ip是否正常不正常的话vi /etc/sysconfig/network-scripts/ifcfg-ens33（可用TAB自动补全）查看网卡配置文件文件中的onboot=yes开机自启动  no 开机不启动">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-16T10:15:22.835Z">
+<meta property="og:updated_time" content="2019-07-16T11:00:45.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day2">
-<meta name="twitter:description" content="1.看windows和linux能否相互ping通Linux下用ifconfig查看ip是否正常不正常的话vi /etc/sysconfig/network-scripts/ifcfg-ens33（可用TAB自动补全）查看网卡配置文件文件中的onboot=yes开机自启动  no 开机不启动   2.修改hostname主机名称vi /etc/sysconfig/network编辑HOSTNAME">
+<meta name="twitter:description" content="1.看windows和linux能否相互ping通Linux下用ifconfig查看ip是否正常不正常的话vi /etc/sysconfig/network-scripts/ifcfg-ens33（可用TAB自动补全）查看网卡配置文件文件中的onboot=yes开机自启动  no 开机不启动">
   
     <link rel="alternative" href="/atom.xml" title="十元" type="application/atom+xml">
   
@@ -172,6 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="1-看windows和linux能否相互ping通"><a href="#1-看windows和linux能否相互ping通" class="headerlink" title="1.看windows和linux能否相互ping通"></a>1.看windows和linux能否相互ping通</h3><p>Linux下用ifconfig查看ip是否正常<br>不正常的话<br><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code>（可用TAB自动补全）<br>查看网卡配置文件文件中的<code>onboot=yes</code>开机自启动  <code>no</code> 开机不启动  </p>
+<a id="more"></a>
 <h3 id="2-修改hostname主机名称"><a href="#2-修改hostname主机名称" class="headerlink" title="2.修改hostname主机名称"></a>2.修改hostname主机名称</h3><p><code>vi /etc/sysconfig/network</code><br>编辑<code>HOSTNAME=Master</code><br><code>vi /etc/hostname</code><br>删除原来的内容，写入Master  </p>
 <h3 id="3-查看防火墙状态"><a href="#3-查看防火墙状态" class="headerlink" title="3.查看防火墙状态"></a>3.查看防火墙状态</h3><p><code>firewall-cmd --state</code>查看防火墙状态<br><code>systemctl stop firewalld.service</code> 停止当前防火墙<br><code>systemctl disable firewalld.service</code>永久禁用  </p>
 <h3 id="4-克隆slave"><a href="#4-克隆slave" class="headerlink" title="4.克隆slave"></a>4.克隆slave</h3><p>克隆两台虚拟机，分别命令为Slave0和Slave1  </p>
@@ -214,13 +216,24 @@ hadoop v</code></pre>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        			<a href="/public/categories/大数据//" class="article-tag-list-link color4">大数据</a>
         		</li>
       		
 		</ul>
@@ -320,6 +333,19 @@ hadoop v</code></pre>
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-看windows和linux能否相互ping通"><span class="toc-number">1.</span> <span class="toc-text">1.看windows和linux能否相互ping通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-修改hostname主机名称"><span class="toc-number">2.</span> <span class="toc-text">2.修改hostname主机名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-查看防火墙状态"><span class="toc-number">3.</span> <span class="toc-text">3.查看防火墙状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-克隆slave"><span class="toc-number">4.</span> <span class="toc-text">4.克隆slave</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-机群是否互通"><span class="toc-number">5.</span> <span class="toc-text">5.机群是否互通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-配置无密码登陆"><span class="toc-number">6.</span> <span class="toc-text">6.配置无密码登陆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-配置jdk和Hadoop环境"><span class="toc-number">7.</span> <span class="toc-text">7.配置jdk和Hadoop环境</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -368,7 +394,7 @@ hadoop v</code></pre>
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -449,6 +475,38 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mapreduce</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hive</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -509,6 +567,8 @@ MathJax.Hub.Queue(function() {
 
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">爱生活爱自己</div>
   	  	
     	</section>
     

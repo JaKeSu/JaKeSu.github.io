@@ -8,17 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Day3 | 十元</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.单机版hadoopcd opt/hadoop-2.6.4/etc/hadoop/vi hadoop-env.sh 文件末尾追加：export JAVA_HOME=/opt/jdk1.8.0_101   2.伪分布式搭建cd /opt/hadoop-2.6.4/etc/hadoop/vi core-site.xml &amp;lt;configuration&amp;gt;         &amp;lt;proper">
+  <meta name="description" content="1.单机版hadoopcd opt/hadoop-2.6.4/etc/hadoop/vi hadoop-env.sh 文件末尾追加：export JAVA_HOME=/opt/jdk1.8.0_101">
+<meta name="keywords" content="hadoop,分布式系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day3">
 <meta property="og:url" content="http://yoursite.com/2019/07/11/Day3/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="1.单机版hadoopcd opt/hadoop-2.6.4/etc/hadoop/vi hadoop-env.sh 文件末尾追加：export JAVA_HOME=/opt/jdk1.8.0_101   2.伪分布式搭建cd /opt/hadoop-2.6.4/etc/hadoop/vi core-site.xml &amp;lt;configuration&amp;gt;         &amp;lt;proper">
+<meta property="og:description" content="1.单机版hadoopcd opt/hadoop-2.6.4/etc/hadoop/vi hadoop-env.sh 文件末尾追加：export JAVA_HOME=/opt/jdk1.8.0_101">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-16T10:20:52.571Z">
+<meta property="og:updated_time" content="2019-07-16T11:00:35.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day3">
-<meta name="twitter:description" content="1.单机版hadoopcd opt/hadoop-2.6.4/etc/hadoop/vi hadoop-env.sh 文件末尾追加：export JAVA_HOME=/opt/jdk1.8.0_101   2.伪分布式搭建cd /opt/hadoop-2.6.4/etc/hadoop/vi core-site.xml &amp;lt;configuration&amp;gt;         &amp;lt;proper">
+<meta name="twitter:description" content="1.单机版hadoopcd opt/hadoop-2.6.4/etc/hadoop/vi hadoop-env.sh 文件末尾追加：export JAVA_HOME=/opt/jdk1.8.0_101">
   
     <link rel="alternative" href="/atom.xml" title="十元" type="application/atom+xml">
   
@@ -172,6 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="1-单机版hadoop"><a href="#1-单机版hadoop" class="headerlink" title="1.单机版hadoop"></a>1.单机版hadoop</h3><p><code>cd opt/hadoop-2.6.4/etc/hadoop/</code><br><code>vi hadoop-env.sh</code> 文件末尾追加：<code>export JAVA_HOME=/opt/jdk1.8.0_101</code>  </p>
+<a id="more"></a>
 <h3 id="2-伪分布式搭建"><a href="#2-伪分布式搭建" class="headerlink" title="2.伪分布式搭建"></a>2.伪分布式搭建</h3><p><code>cd /opt/hadoop-2.6.4/etc/hadoop/</code><br><code>vi core-site.xml</code></p>
 <pre><code>&lt;configuration&gt;
         &lt;property&gt;
@@ -219,13 +221,28 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hadoop</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        			<a href="/public/categories/大数据//" class="article-tag-list-link color4">大数据</a>
         		</li>
       		
 		</ul>
@@ -325,6 +342,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-单机版hadoop"><span class="toc-number">1.</span> <span class="toc-text">1.单机版hadoop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-伪分布式搭建"><span class="toc-number">2.</span> <span class="toc-text">2.伪分布式搭建</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -373,7 +403,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -454,6 +484,38 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mapreduce</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hive</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -514,6 +576,8 @@ MathJax.Hub.Queue(function() {
 
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">爱生活爱自己</div>
   	  	
     	</section>
     

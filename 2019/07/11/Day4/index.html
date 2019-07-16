@@ -8,19 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Day4 | 十元</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="配置伪分布式的yarn文件cd /opt/hadoop-2.6.4/etc/hadoop/pwd查看当前目录cp mapred-site.xml.template  mapred-site.xml 通过复制创建mapred-site.xml文件vi mapred-site.xml 改写文件，写入configuration配置 &amp;lt;configuration&amp;gt;         &amp;lt;pr">
+  <meta name="description" content="配置伪分布式的yarn文件cd /opt/hadoop-2.6.4/etc/hadoop/pwd查看当前目录cp mapred-site.xml.template  mapred-site.xml 通过复制创建mapred-site.xml文件">
+<meta name="keywords" content="hadoop,分布式系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day4">
 <meta property="og:url" content="http://yoursite.com/2019/07/11/Day4/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="配置伪分布式的yarn文件cd /opt/hadoop-2.6.4/etc/hadoop/pwd查看当前目录cp mapred-site.xml.template  mapred-site.xml 通过复制创建mapred-site.xml文件vi mapred-site.xml 改写文件，写入configuration配置 &amp;lt;configuration&amp;gt;         &amp;lt;pr">
+<meta property="og:description" content="配置伪分布式的yarn文件cd /opt/hadoop-2.6.4/etc/hadoop/pwd查看当前目录cp mapred-site.xml.template  mapred-site.xml 通过复制创建mapred-site.xml文件">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/pasted-0.png">
 <meta property="og:image" content="http://yoursite.com/images/pasted-1.png">
-<meta property="og:updated_time" content="2019-07-16T10:21:15.199Z">
+<meta property="og:updated_time" content="2019-07-16T11:00:20.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day4">
-<meta name="twitter:description" content="配置伪分布式的yarn文件cd /opt/hadoop-2.6.4/etc/hadoop/pwd查看当前目录cp mapred-site.xml.template  mapred-site.xml 通过复制创建mapred-site.xml文件vi mapred-site.xml 改写文件，写入configuration配置 &amp;lt;configuration&amp;gt;         &amp;lt;pr">
+<meta name="twitter:description" content="配置伪分布式的yarn文件cd /opt/hadoop-2.6.4/etc/hadoop/pwd查看当前目录cp mapred-site.xml.template  mapred-site.xml 通过复制创建mapred-site.xml文件">
 <meta name="twitter:image" content="http://yoursite.com/images/pasted-0.png">
   
     <link rel="alternative" href="/atom.xml" title="十元" type="application/atom+xml">
@@ -174,7 +175,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="配置伪分布式的yarn文件"><a href="#配置伪分布式的yarn文件" class="headerlink" title="配置伪分布式的yarn文件"></a>配置伪分布式的yarn文件</h3><p><code>cd /opt/hadoop-2.6.4/etc/hadoop/</code><br><code>pwd</code>查看当前目录<br><code>cp mapred-site.xml.template  mapred-site.xml</code> 通过复制创建<strong>mapred-site.xml文件</strong><br><code>vi mapred-site.xml</code> 改写文件，写入configuration配置</p>
+        <h3 id="配置伪分布式的yarn文件"><a href="#配置伪分布式的yarn文件" class="headerlink" title="配置伪分布式的yarn文件"></a>配置伪分布式的yarn文件</h3><p><code>cd /opt/hadoop-2.6.4/etc/hadoop/</code><br><code>pwd</code>查看当前目录<br><code>cp mapred-site.xml.template  mapred-site.xml</code> 通过复制创建<strong>mapred-site.xml文件</strong>  </p>
+<a id="more"></a>
+<p><code>vi mapred-site.xml</code> 改写文件，写入configuration配置</p>
 <pre><code>&lt;configuration&gt;
         &lt;property&gt;
                 &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
@@ -421,13 +424,28 @@ jps</code></pre><p> （查看出来NameNode，DataNode， SecondaryNameNode）  
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hadoop</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        			<a href="/public/categories/大数据//" class="article-tag-list-link color4">大数据</a>
         		</li>
       		
 		</ul>
@@ -527,6 +545,19 @@ jps</code></pre><p> （查看出来NameNode，DataNode， SecondaryNameNode）  
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置伪分布式的yarn文件"><span class="toc-number">1.</span> <span class="toc-text">配置伪分布式的yarn文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HDFS常用命令："><span class="toc-number">2.</span> <span class="toc-text">HDFS常用命令：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#停止伪分布式："><span class="toc-number">3.</span> <span class="toc-text">停止伪分布式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置分布式集群："><span class="toc-number">4.</span> <span class="toc-text">配置分布式集群：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#失败常用解决方案："><span class="toc-number">5.</span> <span class="toc-text">失败常用解决方案：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式存储—-分布式计算-MapReduce"><span class="toc-number">6.</span> <span class="toc-text">分布式存储—-分布式计算 MapReduce</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -575,7 +606,7 @@ jps</code></pre><p> （查看出来NameNode，DataNode， SecondaryNameNode）  
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -656,6 +687,38 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mapreduce</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hive</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -716,6 +779,8 @@ MathJax.Hub.Queue(function() {
 
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">爱生活爱自己</div>
   	  	
     	</section>
     
