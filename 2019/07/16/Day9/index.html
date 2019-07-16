@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/7 | 十元</title>
+  <title>Day9 | 十元</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="十元">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+  <meta name="description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /在eclipse中新建package，重命名为com.sj.clean其中新建类 CleanMapper.java package com.sj.clean;  import java.io.IOException;  import">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day9">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Day9/index.html">
 <meta property="og:site_name" content="十元">
+<meta property="og:description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /在eclipse中新建package，重命名为com.sj.clean其中新建类 CleanMapper.java package com.sj.clean;  import java.io.IOException;  import">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-16T10:21:47.227Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="十元">
+<meta name="twitter:title" content="Day9">
+<meta name="twitter:description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /在eclipse中新建package，重命名为com.sj.clean其中新建类 CleanMapper.java package com.sj.clean;  import java.io.IOException;  import">
   
     <link rel="alternative" href="/atom.xml" title="十元" type="application/atom+xml">
   
@@ -143,37 +147,211 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Day9" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
   
+    
+      <header class="article-header">
+        
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/16/Day9/" class="archive-article-date">
+    <h1 class="article-title" itemprop="name">
+      Day9
+    </h1>
+  
+
+        
+        <a href="/2019/07/16/Day9/" class="archive-article-date">
   	<time datetime="2019-07-16T09:46:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/16/Day9/">Day9</a>
-    </h1>
-  
+        
+		
+		
 
-        <div class="article-info info-on-right">
-          
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析<br>上传招聘数据到分布式文件系统<br> <code>hdfs dfs –put /opt/zl0507.csv  /</code><br>在eclipse中新建package，重命名为<strong>com.sj.clean</strong><br>其中新建类 <strong>CleanMapper.java</strong></p>
+<pre><code>package com.sj.clean;
+
+import java.io.IOException;
+
+import org.apache.hadoop.classification.InterfaceAudience.Private;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class CleanMapper extends Mapper&lt;LongWritable,Text,NullWritable,Text&gt;{
+    @Override
+    protected void map(LongWritable key, Text value, Mapper&lt;LongWritable, Text, NullWritable, Text&gt;.Context context)
+            throws IOException, InterruptedException {
+        //将第一行过滤掉,第一行偏移量为0
+        if(!key.toString().equals(&quot;0&quot;)){
+            String[] arr=value.toString().split(&quot;,&quot;);
+            //用于一行数据，分割成7个字符串的数组
+            String[] cacheString=new String[7];
+            //存储第七个字段由于数据量太大，可能出现英文逗号（分隔符），从而产生错误，所以加了一个cachestring来进行拼接
+            StringBuffer stringBuffer =new StringBuffer();
+            for (int i=0;i&lt;arr.length;i++){
+                if(i&lt;6){
+                    cacheString[i]=arr[i];
+
+                }else if(i&gt;=6){
+                    stringBuffer.append(arr[i]);
+                }
+            }
+            cacheString[6]=stringBuffer.toString();
+            if(check(cacheString)){
+                String data=String.join(&quot;|&quot;,cacheString);
+                context.write(NullWritable.get(), new Text(data));
+            }
+        }
+        // TODO Auto-generated method stub
+
+    }
+    private boolean check(String [] arr){
+        for(String string : arr){
+            if(string.trim().equals(&quot;&quot;)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+}</code></pre><p>新建类 <strong>CleanReducer.java</strong></p>
+<pre><code>package com.sj.clean;
+
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+public class CleanReducer extends Reducer&lt;NullWritable, Text, NullWritable, Text&gt;{
+    @Override
+    protected void reduce(NullWritable arg0, Iterable&lt;Text&gt; values,
+            Reducer&lt;NullWritable, Text, NullWritable, Text&gt;.Context context) throws IOException, InterruptedException {
+        // TODO Auto-generated method stub
+        for(Text text:values){
+            String [] datalist=text.toString().split(&quot;\\|&quot;);
+            if(datalist.length==7){
+                String data=String.join(&quot;|&quot;, datalist);
+                context.write(NullWritable.get(),new Text(data));
+            }
+        }
+    }
+}</code></pre><p>新建类 <strong>Main.java</strong></p>
+<pre><code>package com.sj.clean;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+
+public class Main {
+    public static void main(String[] args) throws Exception{
+        Configuration configuration=new Configuration();
+        Job job=Job.getInstance(configuration);
+        job.setJarByClass(Main.class);
+        job.setMapperClass(CleanMapper.class);
+        job.setMapOutputKeyClass(NullWritable.class);
+        job.setMapOutputValueClass(Text.class);
+        job.setReducerClass(CleanReducer.class);
+        job.setOutputKeyClass(NullWritable.class);
+        job.setOutputValueClass(NullWritable.class);
+        FileInputFormat.setInputPaths(job, new Path(&quot;hdfs://192.168.245.132:9000/zl0507.csv&quot;));
+        FileOutputFormat.setOutputPath(job,new Path(&quot;hdfs://192.168.245.132:9000/clean&quot;));
+        Boolean res=job.waitForCompletion(true);
+        System.exit(res?0:-1);
+
+
+    }
+
+}</code></pre><p>运行Main.java，在分布式文件系统/clean/ 中生成文件  </p>
+<p>利用hive进行词频统计：<br>常用命令： </p>
+<pre><code>create database if not exists hive;
+show databases;
+show databases like &apos;h.*&apos;;
+use hive;
+show tables;</code></pre><p>  <code>create table if not exists hive.userr(name string comment&#39;username&#39;,pwd string comment &#39;password&#39;, address struct&lt;street:string,city:string,state:string,zip:int&gt;,identify map&lt;int,tinyint&gt; comment&#39;number,sex&#39;);</code></p>
+<p>统计：<br>master：<br><code>cd /opt</code><br><code>vi wc.txt</code><br>写入： </p>
+<pre><code>hongyutang love qiaoshuang
+xiaoyu is running
+china is great country
+beijing is the capital of china</code></pre><p>启动hive  </p>
+<pre><code>create table wc(txt String) row format delimited fields terminated by &apos;\t&apos;;
+load data local inpath &apos;/opt/wc.txt&apos; overwrite into table wc;
+select * from wc;
+
+select split(txt,&apos; &apos;) from wc;</code></pre><p>结果：  </p>
+<pre><code>[&quot;hongyutang&quot;,&quot;love&quot;,&quot;qiaoshuang&quot;]
+[&quot;xiaoyu&quot;,&quot;is&quot;,&quot;running&quot;]
+[&quot;china&quot;,&quot;is&quot;,&quot;great&quot;,&quot;country&quot;]
+[&quot;beijing&quot;,&quot;is&quot;,&quot;the&quot;,&quot;capital&quot;,&quot;of&quot;,&quot;china&quot;]</code></pre><p><code>select explode(split(txt,&#39; &#39;)) from wc;</code><br>结果  </p>
+<pre><code>hongyutang
+love
+qiaoshuang
+xiaoyu
+is
+running
+china
+is
+great
+country
+beijing
+is
+the
+capital
+of
+china</code></pre><p><code>select t1.word,count(t1.word) from (select explode(split(txt ,&#39; &#39;)) word from wc)t1 group by t1.word;</code>  </p>
+<pre><code>beijing 1
+capital 1
+china   2
+country 1
+great   1
+hongyutang      1
+is      3
+love    1
+of      1
+qiaoshuang      1
+running 1
+the     1
+xiaoyu  1</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>总有一天你也会变得和我一样强<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -186,337 +364,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/16/Day9/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/15/Day8/" class="archive-article-date">
-  	<time datetime="2019-07-15T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-15</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/15/Day8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Day8</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/15/Day8/">Day8</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/15/Day6/" class="archive-article-date">
-  	<time datetime="2019-07-15T14:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-15</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/15/Day6/">Day6</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/11/Day5/" class="archive-article-date">
-  	<time datetime="2019-07-11T09:17:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/11/Day5/">Day5</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/11/Day4/" class="archive-article-date">
-  	<time datetime="2019-07-11T08:08:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/11/Day4/">Day4</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/11/Day3/" class="archive-article-date">
-  	<time datetime="2019-07-11T05:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/11/Day3/">Day3</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/11/Day2/" class="archive-article-date">
-  	<time datetime="2019-07-11T03:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/11/Day2/">Day2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/10/Day1/" class="archive-article-date">
-  	<time datetime="2019-07-10T14:12:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/10/Day1/">Day1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/07/我的第一篇博客文章/" class="archive-article-date">
-  	<time datetime="2019-07-07T13:05:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/07/我的第一篇博客文章/">我的第一篇博客文章</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/07/hello-world/" class="archive-article-date">
-  	<time datetime="2019-07-07T12:42:31.232Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -543,8 +488,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

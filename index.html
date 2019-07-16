@@ -145,7 +145,7 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Day2-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Day9" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
   
     
@@ -153,13 +153,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/10/Day2-1/">Day2</a>
+      <a class="article-title" href="/2019/07/16/Day9/">Day9</a>
     </h1>
   
 
         
-        <a href="/2019/07/10/Day2-1/" class="archive-article-date">
-  	<time datetime="2019-07-10T15:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
+        <a href="/2019/07/16/Day9/" class="archive-article-date">
+  	<time datetime="2019-07-16T09:46:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
 </a>
         
 		
@@ -167,26 +167,158 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.看windows和linux能否相互ping通<br>Linux下用ifconfig查看ip是否正常<br>如果不正常的话  </p>
-<pre><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></pre><p>查看网卡配置文件文件中的<code>onboot=yes</code> 开机自启动  <code>onboot=no</code> 开机不启动</p>
-<p>2.修改hostname主机名称</p>
-<pre><code>vi /etc/sysconfig/network</code></pre><p>编辑<code>HOSTNAME=Master</code>修改主机名  </p>
-<pre><code>vi /etc/hostname</code></pre><p>删除原来的内容，写入Master</p>
-<p>3.查看防火墙状态</p>
-<p><code>firewall-cmd --state</code>查看防火墙状态<br><code>systemctl stop firewalld.service</code>  停止当前防火墙<br><code>systemctl disable firewalld.service</code>  永久禁用</p>
-<p>4.克隆slave<br>克隆两台虚拟机，分别命令为slave0和slave1</p>
-<p>5.机群是否互通<br>分别相互ping三台机器，看是否相通<br>配置hosts文件，方便互相访问机群<br><code>vi /etc/hosts</code><br>文件末尾追加 master slave0 slave1之间的地址映射,如</p>
-<pre><code>192.168.179.130 master
-192.168.179.131 slave0
-192.168.179.132 slave2</code></pre><p>保存后利用远程传输命令，传输到其他两台机器<br><code>scp /etc/hosts root@salve1:/etc/hosts</code></p>
-<p>6.配置无密码登陆<br><code>ssh-keygen</code>  生成ssh公钥私钥串<br><code>cd ~/.ssh</code> 进入生成的.ssh目录<br><code>ssh root@salve1</code> 利用ssh远程登陆salve1,测试成功<br><code>scp id_rsa.pub root@slave0:~/.ssh/master.pub</code>利用远程传输将master的公钥传到slave0的.ssh目录下，并且改名为master.pub<br><code>cat master.pub &gt;&gt;authorized_keys</code> 进入slave0，将master.pub的文件追加到authorized_keys（原来没有）下面<br><code>chmod 600 authorized_keys</code> 更改authorized_keys的权限为600，600十进制为110 000 000 对应文件权限为 可读可写不可执行，不可读不可写不可执行，不可读不可写不可执行<br><code>11</code> 查看详细信息</p>
-<p>以上所有命令可以用<code>ssh-copy-id root@slave1</code>代替<br>最后完成master对master，slave0，slave1的无密码登陆，slave0对master,slave1对master的无密登陆</p>
-<p>7.配置jdk和Hadoop环境<br>利用软件<strong>ssh secure shell client</strong>将jdk和Hadoop压缩包传输到master<br>进入压缩包目录，利用<code>tar -zxvf</code>文件名解压文件到当前目录<br><code>vi ~/.bashrc</code>编辑环境变量，配置环境<br>在<strong>~/.bashrc</strong> 写入</p>
-<pre><code>export JAVA_HOME=/opt/jdk1.8.0_101
-export PATH=$PATH:$JAVA_HOME/bin
-export HADOOP_HOME=/opt/hadoop-2.6.4
-export PATH=$PATH:$HADOOP_HOME/bin</code></pre><p>保存并且退出<br><code>source ~/.bashrc</code>编译<br>查看java与hadoop版本看是否成功<br><code>java -version</code><br><code>hadoop version</code></p>
+        <p>对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析<br>上传招聘数据到分布式文件系统<br> <code>hdfs dfs –put /opt/zl0507.csv  /</code><br>在eclipse中新建package，重命名为<strong>com.sj.clean</strong><br>其中新建类 <strong>CleanMapper.java</strong></p>
+<pre><code>package com.sj.clean;
 
+import java.io.IOException;
+
+import org.apache.hadoop.classification.InterfaceAudience.Private;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class CleanMapper extends Mapper&lt;LongWritable,Text,NullWritable,Text&gt;{
+    @Override
+    protected void map(LongWritable key, Text value, Mapper&lt;LongWritable, Text, NullWritable, Text&gt;.Context context)
+            throws IOException, InterruptedException {
+        //将第一行过滤掉,第一行偏移量为0
+        if(!key.toString().equals(&quot;0&quot;)){
+            String[] arr=value.toString().split(&quot;,&quot;);
+            //用于一行数据，分割成7个字符串的数组
+            String[] cacheString=new String[7];
+            //存储第七个字段由于数据量太大，可能出现英文逗号（分隔符），从而产生错误，所以加了一个cachestring来进行拼接
+            StringBuffer stringBuffer =new StringBuffer();
+            for (int i=0;i&lt;arr.length;i++){
+                if(i&lt;6){
+                    cacheString[i]=arr[i];
+
+                }else if(i&gt;=6){
+                    stringBuffer.append(arr[i]);
+                }
+            }
+            cacheString[6]=stringBuffer.toString();
+            if(check(cacheString)){
+                String data=String.join(&quot;|&quot;,cacheString);
+                context.write(NullWritable.get(), new Text(data));
+            }
+        }
+        // TODO Auto-generated method stub
+
+    }
+    private boolean check(String [] arr){
+        for(String string : arr){
+            if(string.trim().equals(&quot;&quot;)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+}</code></pre><p>新建类 <strong>CleanReducer.java</strong></p>
+<pre><code>package com.sj.clean;
+
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+public class CleanReducer extends Reducer&lt;NullWritable, Text, NullWritable, Text&gt;{
+    @Override
+    protected void reduce(NullWritable arg0, Iterable&lt;Text&gt; values,
+            Reducer&lt;NullWritable, Text, NullWritable, Text&gt;.Context context) throws IOException, InterruptedException {
+        // TODO Auto-generated method stub
+        for(Text text:values){
+            String [] datalist=text.toString().split(&quot;\\|&quot;);
+            if(datalist.length==7){
+                String data=String.join(&quot;|&quot;, datalist);
+                context.write(NullWritable.get(),new Text(data));
+            }
+        }
+    }
+}</code></pre><p>新建类 <strong>Main.java</strong></p>
+<pre><code>package com.sj.clean;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+
+public class Main {
+    public static void main(String[] args) throws Exception{
+        Configuration configuration=new Configuration();
+        Job job=Job.getInstance(configuration);
+        job.setJarByClass(Main.class);
+        job.setMapperClass(CleanMapper.class);
+        job.setMapOutputKeyClass(NullWritable.class);
+        job.setMapOutputValueClass(Text.class);
+        job.setReducerClass(CleanReducer.class);
+        job.setOutputKeyClass(NullWritable.class);
+        job.setOutputValueClass(NullWritable.class);
+        FileInputFormat.setInputPaths(job, new Path(&quot;hdfs://192.168.245.132:9000/zl0507.csv&quot;));
+        FileOutputFormat.setOutputPath(job,new Path(&quot;hdfs://192.168.245.132:9000/clean&quot;));
+        Boolean res=job.waitForCompletion(true);
+        System.exit(res?0:-1);
+
+
+    }
+
+}</code></pre><p>运行Main.java，在分布式文件系统/clean/ 中生成文件  </p>
+<p>利用hive进行词频统计：<br>常用命令： </p>
+<pre><code>create database if not exists hive;
+show databases;
+show databases like &apos;h.*&apos;;
+use hive;
+show tables;</code></pre><p>  <code>create table if not exists hive.userr(name string comment&#39;username&#39;,pwd string comment &#39;password&#39;, address struct&lt;street:string,city:string,state:string,zip:int&gt;,identify map&lt;int,tinyint&gt; comment&#39;number,sex&#39;);</code></p>
+<p>统计：<br>master：<br><code>cd /opt</code><br><code>vi wc.txt</code><br>写入： </p>
+<pre><code>hongyutang love qiaoshuang
+xiaoyu is running
+china is great country
+beijing is the capital of china</code></pre><p>启动hive  </p>
+<pre><code>create table wc(txt String) row format delimited fields terminated by &apos;\t&apos;;
+load data local inpath &apos;/opt/wc.txt&apos; overwrite into table wc;
+select * from wc;
+
+select split(txt,&apos; &apos;) from wc;</code></pre><p>结果：  </p>
+<pre><code>[&quot;hongyutang&quot;,&quot;love&quot;,&quot;qiaoshuang&quot;]
+[&quot;xiaoyu&quot;,&quot;is&quot;,&quot;running&quot;]
+[&quot;china&quot;,&quot;is&quot;,&quot;great&quot;,&quot;country&quot;]
+[&quot;beijing&quot;,&quot;is&quot;,&quot;the&quot;,&quot;capital&quot;,&quot;of&quot;,&quot;china&quot;]</code></pre><p><code>select explode(split(txt,&#39; &#39;)) from wc;</code><br>结果  </p>
+<pre><code>hongyutang
+love
+qiaoshuang
+xiaoyu
+is
+running
+china
+is
+great
+country
+beijing
+is
+the
+capital
+of
+china</code></pre><p><code>select t1.word,count(t1.word) from (select explode(split(txt ,&#39; &#39;)) word from wc)t1 group by t1.word;</code>  </p>
+<pre><code>beijing 1
+capital 1
+china   2
+country 1
+great   1
+hongyutang      1
+is      3
+love    1
+of      1
+qiaoshuang      1
+running 1
+the     1
+xiaoyu  1</code></pre>
       
 
       
@@ -209,7 +341,7 @@ export PATH=$PATH:$HADOOP_HOME/bin</code></pre><p>保存并且退出<br><code>so
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/10/Day2-1/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/07/16/Day9/">展开全文 >></a>
         </p>
       
 
@@ -239,7 +371,7 @@ export PATH=$PATH:$HADOOP_HOME/bin</code></pre><p>保存并且退出<br><code>so
 
 
   
-    <article id="post-大数据实训" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Day8" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
   
     
@@ -247,12 +379,1002 @@ export PATH=$PATH:$HADOOP_HOME/bin</code></pre><p>保存并且退出<br><code>so
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/10/大数据实训/">Day1</a>
+      <a class="article-title" href="/2019/07/15/Day8/">Day8</a>
     </h1>
   
 
         
-        <a href="/2019/07/10/大数据实训/" class="archive-article-date">
+        <a href="/2019/07/15/Day8/" class="archive-article-date">
+  	<time datetime="2019-07-15T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-15</time>
+</a>
+        
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>eclipse上编写mapreduce程序，进行词频统计<br>开启分布式文件系统（这里为伪分布），将<strong>/opt/input/test.txt</strong>文件上传到分布式文件系统中的<strong>/input</strong>下<br><code>hdfs dfs –put /opt/input/test.txt  /input/</code><br>1．    保证安装好jdk_1.8.0_32bit<br>2．    配置hadoop的环境变量：  </p>
+<p><img src="/images/pasted-2.png" alt="filename already exists, renamed"></p>
+<p>path中加入<br><img src="/images/pasted-3.png" alt="filename already exists, renamed"></p>
+<p>3.启动eclipse<br>新建MapReduceDemo Java项目，将hadoop相关的jar包配置在项目中<br>右键项目  <strong>Properties</strong> -&gt;<strong>java build path ** -&gt;  **libraries</strong> 中<strong>add external jars</strong>  </p>
+<p>在src下新建package，命名为<strong>com.sj.mapreduce</strong><br>新建类 <strong>WordCountMapper.java</strong></p>
+<pre><code>package com.sj.mapreduce;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class WordCountMapper extends Mapper&lt;LongWritable, Text, Text, IntWritable&gt; {
+    @Override
+    protected void map(LongWritable key, Text value, Mapper&lt;LongWritable, Text, Text, IntWritable&gt;.Context context)
+            throws IOException, InterruptedException {
+        // TODO Auto-generated method stub
+//        super.map(key, value, context);
+        String line=value.toString();
+        String[] words=line.split(&quot; &quot;);
+        for(int i=0;i&lt;words.length;i++){
+            //
+            context.write(new Text(words[i]),new IntWritable(1) );
+        }
+    }
+}</code></pre><p>新建类<strong>WordCountReducer.java</strong></p>
+<pre><code>package com.sj.mapreduce;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+public class WordCountReducer extends Reducer&lt;Text, IntWritable, Text, IntWritable&gt; {
+    @Override
+    protected void reduce(Text key, java.lang.Iterable&lt;IntWritable&gt; values, org.apache.hadoop.mapreduce.Reducer&lt;Text,IntWritable,Text,IntWritable&gt;.Context context) throws IOException ,InterruptedException {
+        int count =0;
+        for(IntWritable value :values){
+            count+=value.get();
+    };
+        context.write(key, new IntWritable(count));
+    }
+
+
+
+}</code></pre><p>新建类<strong>WordCountDriver.java</strong></p>
+<pre><code>package com.sj.mapreduce;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class WordCountDriver {
+    //用Exception 抛异常，用Exception去接受所有异常，多态的体现
+    public static void main(String[] args) throws Exception {
+        System.setProperty(&quot;hadoop.home.dir&quot;, &quot;D:\\hadoop-common-2.2.0-bin-master\\hadoop-common-2.2.0-bin-master&quot;);
+
+        //集群中所配置的hadoop的配置文件
+        Configuration configuration = new Configuration();
+        //创建job
+        Job job=Job.getInstance(configuration);
+        //指定本程序的jar包所在路径
+        job.setJarByClass(WordCountDriver.class);
+        //指定本job要使用的Mapper业务类
+        job.setMapperClass(WordCountMapper.class);
+        //指定mapper输出的k-v类型
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(IntWritable.class);
+        //制定本job要使用的Reduce业务类
+        job.setReducerClass(WordCountReducer.class);
+        //设置Reduce输出的最终k-v数据类型
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        FileInputFormat.setInputPaths(job, new Path(&quot;hdfs://192.168.245.132:9000/input/test.txt&quot;));
+        FileOutputFormat.setOutputPath(job,new Path(&quot;hdfs://192.168.245.132:9000/output&quot;));
+        Boolean res=job.waitForCompletion(true);
+        System.exit(res?0:-1);
+
+
+    }
+
+}</code></pre><p>运行<strong>WordCountDriver.java</strong><br>对分布式系统中<strong>/input/test.txt</strong>中的测试文件进行词频统计，得到结果</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/15/Day8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Day6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+  
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/15/Day6/">Day6</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/15/Day6/" class="archive-article-date">
+  	<time datetime="2019-07-15T14:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-15</time>
+</a>
+        
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="智联招聘数据爬取"><a href="#智联招聘数据爬取" class="headerlink" title="智联招聘数据爬取"></a>智联招聘数据爬取</h3><p>利用爬虫，爬取智联招聘的数据，其中因为智联招聘网站对爬虫进行了反爬机制，从网页源码爬不到div下面的内容，于是采用了获取json数据进行分析：  </p>
+<p><strong>自己的代码：</strong></p>
+<pre><code>import requests
+import json
+from bs4 import BeautifulSoup
+
+url=&apos;https://fe-api.zhaopin.com/c/i/sou?pageSize=90&amp;cityId=489&amp;workExperience=-1&amp;education=-1&amp;companyType=-1&amp;employmentType=-1&amp;jobWelfareTag=-1&amp;kw=%E5%A4%A7%E6%95%B0%E6%8D%AE&amp;kt=3&amp;_v=0.79005936&amp;x-zp-page-request-id=520adc5dcbde404f8f20d5c0846b54b5-1562324160122-21643&amp;x-zp-client-id=0d243d91-4d7b-43f7-9551-07854f531ab2&apos;
+header={&quot;User-Agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36&quot;}
+
+def spider_job_content():
+    response=requests.get(url=url,headers=header)
+    print(response.status_code)
+    if response.status_code==200:
+        response.encoding=&apos;utf-8&apos;
+        html=response.text
+
+        html0=json.loads(html)
+        text=&apos;&apos;
+        file=open(&apos;spider_job.txt&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;)
+        for result in html0[&apos;data&apos;][&apos;results&apos;]:
+#             print(result[&apos;company&apos;][&apos;name&apos;])
+            jobname=result[&quot;jobName&quot;]
+            company=result[&apos;company&apos;][&apos;name&apos;]
+            URL=result[&apos;company&apos;][&apos;url&apos;]
+            update=result[&quot;updateDate&quot;]
+            salary=result[&apos;salary&apos;]
+            jobType=result[&quot;jobType&quot;][&quot;items&quot;][0][&quot;name&quot;]
+            workingExp=result[&quot;workingExp&quot;][&apos;name&apos;]
+            welfare=str(result[&quot;welfare&quot;])
+            text+=&apos;工作名称：&apos;+jobname+&apos;\n&apos;
+            text+=&apos;公司名称：&apos;+company+&apos;\n&apos;
+            text+=&apos;公司网站：&apos;+url+&apos;\n&apos;
+            text+=&apos;更新日期：&apos;+update+&apos;\n&apos;
+            text+=&apos;薪水：&apos;+salary+&apos;\n&apos;
+            text+=&apos;工作类型：&apos;+jobType+&apos;\n&apos;
+            text+=&apos;工作经验：&apos;+workingExp+&apos;\n&apos;
+            text+=&apos;福利：&apos;+welfare+&apos;\n\n\n&apos;
+
+
+
+
+#         print(html0[&apos;data&apos;][&apos;results&apos;][0][&apos;company&apos;][&apos;name&apos;])
+#         div_list=bfs.find_all(&apos;div&apos;,attrs={&apos;class&apos;:&apos;c-chat-ads&apos;})
+#         print(div_list)
+#         for div in div_list:
+#             job_name=bfs.find(&apos;div&apos;,attrs={&apos;class&apos;:&apos;contentpile__content__wrapper__item__info__box__jobname jobName&apos;})
+#             print(job_name)
+#             text+=&apos;工作名称：&apos;+job_name+&apos;\n&apos;
+
+        file.write(text)
+        file.close()
+
+    if __name__==&apos;__main__&apos;:
+    spider_job_content()</code></pre><p><strong>老师的代码：</strong></p>
+<pre><code>import csv
+import requests
+import json
+from lxml import etree
+
+class ZhiLian:
+    def __init__(self):
+        self.headers={&quot;User-Agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36&quot;}
+
+#       以可写的方式创建一个文件，名称叫招聘.csv，默认在这个文件中写入一行数据（company,city,edu,resumeCount,salary,jobName,detail）
+        self.head = [&apos;company&apos;,&apos;city&apos;,&apos;edu&apos;,&apos;resumeCount&apos;,&apos;salary&apos;,&apos;jobName&apos;,&apos;detail&apos;]
+        self.f=open(&apos;招聘.csv&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;,newline=&apos;&apos;)
+        self.out = csv.writer(self.f)
+        self.out.writerow(self.head)
+
+#         with open(&apos;招聘.csv&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;,newline=&apos;&apos;)as f:
+#             self.f_csv = csv.writer(f)
+#             self.f_csv.writerow(head)
+
+    def getHtml(self,url,data):
+#         get请求获取网络数据
+        response=requests.get(url=url,params=data)
+        response=response.content.decode(encoding=&apos;utf-8&apos;)
+#         print(response)
+        return response
+
+    def parse(self,res):
+        html=json.loads(res);
+        for i in html[&apos;data&apos;][&apos;results&apos;]:
+            try:
+                list=[]
+#                 得到公司名称
+                company=i[&apos;company&apos;][&apos;name&apos;]
+#     得到所在城市信息
+                city=i[&apos;city&apos;][&apos;display&apos;]
+#     得到教育水平
+                eduLevel=i[&apos;eduLevel&apos;][&apos;name&apos;]
+#     得到工作年限
+                workingExp=i[&apos;workingExp&apos;][&apos;name&apos;]
+#     讲教育水平跟工作年限拼在一起
+                edu=eduLevel+&quot;/&quot;+workingExp
+#     得到薪水
+                salary=i[&apos;salary&apos;]
+#     得到工作岗位名称
+                jobName=i[&apos;jobName&apos;]
+#                 i[&quot;positionURL&quot;]得到当前项点击进入的二级页面详情的网址       初始化Xpath解析对象
+                data=etree.HTML(requests.get(i[&quot;positionURL&quot;]).content.decode(encoding=&apos;utf-8&apos;))
+                detail=data.xpath(&apos;string(//div[@class=&quot;describtion__detail-content&quot;])&apos;)
+#                 resumeCount=data.xpath(&apos;string(//div[@class=&quot;summary-plane__left&quot;]/ul/li[last()])&apos;)
+                resumeCount=data.xpath(&apos;string(//ul[@class=&quot;summary-plane__info&quot;]/li[last()])&apos;)
+                print(resumeCount)
+                list.append(company)
+                list.append(city)
+                list.append(edu)
+                list.append(resumeCount)
+                list.append(salary)
+                list.append(jobName)
+                list.append(detail)
+#                 print(list)
+                self.out.writerow(list)
+            except:
+                print(&quot;出错了&quot;)
+
+    def run(self):
+        url=&quot;https://fe-api.zhaopin.com/c/i/sou&quot;
+        for i in range(0,1000,90):
+            data={
+                &quot;start&quot;:i,
+                &quot;pageSize&quot;:90,
+                &quot;cityId&quot;:&apos;530&apos;,
+                &quot;workExperience&quot;:-1,
+                &quot;education&quot;:-1,
+                &quot;companyType&quot;:-1,
+                &quot;employmentType&quot;:-1,
+                &quot;jobWelfareTag&quot;:-1,
+                &quot;kw&quot;:&quot;大数据&quot;,
+                &quot;kt&quot;:-1,
+                &quot;_v&quot;:0.68686337,
+                &quot;x-zp-page-request-id&quot;:&quot;c6d2f5a9337c45ddbd6659b5a0fd1b33-1562378017635-920095&quot;,
+                &quot;x-zp-client-id&quot;:&quot;a9b00a0c-0a03-43c5-b89b-6ec0c3deb104&quot;
+            }
+    #       获取网络json数据
+            res=self.getHtml(url,data)
+    #         调用解析方法解析json数据
+            self.parse(res)
+
+if __name__==&apos;__main__&apos;:
+    zl=ZhiLian()
+    zl.run()</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/15/Day6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Day5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+  
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/11/Day5/">Day5</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/11/Day5/" class="archive-article-date">
+  	<time datetime="2019-07-11T09:17:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
+</a>
+        
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="安装Anaconda配置python环境"><a href="#安装Anaconda配置python环境" class="headerlink" title="安装Anaconda配置python环境"></a>安装Anaconda配置python环境</h3><p>python基本语法的讲解：变量类型、字典，循环结构，元组  </p>
+<p>requests包的基本讲解：  </p>
+<pre><code>resp=requests.get(&apos;URL&apos;)请求url  
+resp.text  获得网页文本  
+resp.content 获得网页内容（二进制）  
+resp.encoding  查看网页编码  
+resp.status_code 查看网页状态码  
+resp.json() 获取json数据  
+resp.headers 查看头部信息  </code></pre><p>实例：<br>爬取校花网的信息，并且保存到本地  </p>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url=&quot;http://www.xiaohuar.com/&quot;
+header={&quot;User-Agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36&quot;}
+# 发送网络请求，获取校花内容
+def spider_xiaohua_content():
+    response=requests.get(url=url,headers=header)
+    print(response.status_code)
+#     判断是否请求成功
+    if response.status_code==200:
+#         设置编码模式
+        response.encoding=&apos;utf-8&apos;
+        html=response.content
+#         利用BeautifulSoup解析网页内容
+        bfs=BeautifulSoup(html,&apos;html5lib&apos;)
+        div_list=bfs.find_all(&apos;div&apos;,attrs={&apos;class&apos;:&apos;all_lanmu&apos;})
+
+#         用于保存数据
+        text=&apos;&apos;
+        file=open(&apos;spider_xiaohua.txt&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;)
+        for div in div_list:
+#             找到标题
+            title_div=div.find(&apos;div&apos;,attrs={&apos;class&apos;:&apos;title1000&apos;})
+            title=title_div.find(&apos;a&apos;).string
+#             print(title)
+            text+=&apos;标题:&apos;+title+&apos;\n\n&apos;
+#         获取列表信息    
+            ul=div.find(&apos;ul&apos;)
+            li_list=ul.find_all(&apos;li&apos;)
+            for li in li_list:
+                img_src=li.find(&apos;img&apos;).attrs[&apos;lazysrc&apos;]
+#                 获取每个小图片点击后进入的二级详情页网址
+                a_href=li.find(&apos;a&apos;).attrs[&apos;href&apos;]
+                img_title=li.find(&apos;span&apos;).string
+                school=li.find(&apos;b&apos;,attrs={&apos;class&apos;:&apos;b1&apos;}).string
+                love_counts=li.find(&apos;b&apos;,attrs={&apos;class&apos;:&apos;b2&apos;}).string
+#                 处理图片地址没有域名 手动加入
+                if url not in img_src:
+                    img_src=url+img_src
+                text+=&apos;图片下载地址：&apos;+img_src+&apos;\n&apos;
+                text+=&apos;详情页面：&apos;+a_href+&apos;\n&apos;
+                text+=&apos;图片标题：&apos;+img_title+&apos;\n&apos;
+                text+=&apos;学校：&apos;+school+&apos;\n&apos;
+        file.write(text)
+        file.close()
+
+if __name__== &apos;__main__&apos;:
+spider_xiaohua_content()</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/11/Day5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Day4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+  
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/11/Day4/">Day4</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/11/Day4/" class="archive-article-date">
+  	<time datetime="2019-07-11T08:08:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
+</a>
+        
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="配置伪分布式的yarn文件"><a href="#配置伪分布式的yarn文件" class="headerlink" title="配置伪分布式的yarn文件"></a>配置伪分布式的yarn文件</h3><p><code>cd /opt/hadoop-2.6.4/etc/hadoop/</code><br><code>pwd</code>查看当前目录<br><code>cp mapred-site.xml.template  mapred-site.xml</code> 通过复制创建<strong>mapred-site.xml文件</strong><br><code>vi mapred-site.xml</code> 改写文件，写入configuration配置</p>
+<pre><code>&lt;configuration&gt;
+        &lt;property&gt;
+                &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+                 &lt;value&gt;yarn&lt;/value&gt;
+        &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><p><code>vi yarn-site.xml</code> 改写<strong>yarn-site.xml</strong>文件</p>
+<pre><code>&lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;</code></pre><p><code>/opt/hadoop-2.6.4/sbin/start-yarn.sh</code>启动分布式系统系统<br><code>jps</code>查看当前进程  </p>
+<p><img src="/images/pasted-0.png" alt="filename already exists, renamed"></p>
+<p>浏览器查看</p>
+<h3 id="HDFS常用命令："><a href="#HDFS常用命令：" class="headerlink" title="HDFS常用命令："></a>HDFS常用命令：</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-help</td>
+<td>显示命令的帮助信息</td>
+</tr>
+<tr>
+<td>-ls(r) <path></path></td>
+<td>显示当前目录下所有文件</td>
+</tr>
+<tr>
+<td>-du(s) <path></path></td>
+<td>显示目录中所有文件大小</td>
+</tr>
+<tr>
+<td>-count[-q] <path></path></td>
+<td>显示目录中文件数量</td>
+</tr>
+<tr>
+<td>-mv <src> <dst></dst></src></td>
+<td>移动多个文件到目标目录</td>
+</tr>
+<tr>
+<td>-cp <src> <dst></dst></src></td>
+<td>复制多个文件到目标目录</td>
+</tr>
+<tr>
+<td>-rm(r)</td>
+<td>删除文件(夹)</td>
+</tr>
+<tr>
+<td>-put <localsrc> <dst></dst></localsrc></td>
+<td>本地文件复制到hdfs</td>
+</tr>
+<tr>
+<td>-copyFromLocal</td>
+<td>同put</td>
+</tr>
+<tr>
+<td>-moveFromLocal</td>
+<td>从本地文件移动到hdfs</td>
+</tr>
+<tr>
+<td>-get [-ignoreCrc] <src> <localdst></localdst></src></td>
+<td>复制文件到本地，可以忽略crc校验</td>
+</tr>
+<tr>
+<td>-getmerge <src> <localdst></localdst></src></td>
+<td>将源目录中的所有文件排序合并到一个文件中</td>
+</tr>
+<tr>
+<td>-cat <src></src></td>
+<td>在终端显示文件内容</td>
+</tr>
+<tr>
+<td>-text <src></src></td>
+<td>在终端显示文件内容</td>
+</tr>
+<tr>
+<td>-copyToLocal [-ignoreCrc] <src> <localdst></localdst></src></td>
+<td>复制到本地</td>
+</tr>
+<tr>
+<td>-mkdir <path></path></td>
+<td>创建文件夹</td>
+</tr>
+<tr>
+<td>-touchz <path></path></td>
+<td>创建一个空文件</td>
+</tr>
+</tbody></table>
+<h3 id="停止伪分布式："><a href="#停止伪分布式：" class="headerlink" title="停止伪分布式："></a>停止伪分布式：</h3><p>先停止yarn后停止dfs<br><code>/opt/hadoop-2.6.4/sbin/stop-yarn.sh</code><br><code>/opt/hadoop-2.6.4/sbin/stop-dfs.sh</code><br>jps查看当前进程是否只有jps<br>(如有多余的进程则用<code>kill -9 进程号</code>强制杀掉)</p>
+<h3 id="配置分布式集群："><a href="#配置分布式集群：" class="headerlink" title="配置分布式集群："></a>配置分布式集群：</h3><p><code>cd /opt/hadoop-2.6.4/etc/hadoop</code><br>编辑<strong>core-site.xml</strong>,指定namenode为master机器，master为集群老大<br><code>vi core-site.xml</code>  </p>
+<pre><code>&lt;configuration&gt;
+        &lt;property&gt;
+                &lt;name&gt;fs.defaultFS&lt;/name&gt;
+                &lt;value&gt;hdfs://master:9000&lt;/value&gt;
+        &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><p>编辑<strong>hdfs-site.xml</strong>，指定Namenode存储路径，指定数据节点DataNode存储路径，指定副本数量为2。<br><code>vi hdfs-site.xml</code></p>
+<pre><code>&lt;configuration&gt;
+        &lt;property&gt;
+                &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+                &lt;value&gt;/opt/dfs/name&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;property&gt;
+                &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+                &lt;value&gt;/opt/dfs/data&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;property&gt;
+                &lt;name&gt;dfs.replication&lt;/name&gt;
+                &lt;value&gt;2&lt;/value&gt;
+        &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><p>复制模板文件<br><code>cp mapred-site.xml.template mapred-site.xml</code><br>编辑<strong>mapred-site.xml</strong><br><code>vi mapred-site.xml</code>  </p>
+<pre><code>&lt;configuration&gt;
+        &lt;property&gt;
+                &lt;name&gt;mapred.job.tracker&lt;/name&gt;
+                &lt;value&gt;master:9001&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property&gt;
+                &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+                &lt;value&gt;yarn&lt;/value&gt;
+         &lt;/property&gt;
+        &lt;property&gt;
+                &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+                &lt;value&gt;master:10020&lt;/value&gt;
+        &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><p>编辑<strong>yarn-site.xml</strong><br><code>vi yarn-site.xml</code>  </p>
+<pre><code>&lt;property&gt;
+    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+    &lt;value&gt;master&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+         &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+         &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+         &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+         &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;</code></pre><p>编辑slaves，指定谁是小弟<br><code>vi slaves</code><br>删除原来的localhost加入</p>
+<pre><code>slave0
+slave1</code></pre><p>默认没有masters文件，创建masters文件<br><code>touch masters</code><br>编辑masters文件，文件中加入指定老大的节点<br><code>vi masters</code><br>加入：<br><code>master</code></p>
+<p>传输配置文件给slave0,slave1<br>在Master中:<br><code>cd /opt/hadoop-2.6.4/etc/hadoop</code>进入目录<br><code>scp -r ./* root@slave1:/opt/hadoop-2.6.4/etc/hadoop/</code><br><code>scp -r ./* root@slave0:/opt/hadoop-2.6.4/etc/hadoop/</code>  </p>
+<p>格式化分布式文件<br><code>hdfs namenode -format</code></p>
+<p>启动集群：<br><code>/opt/hadoop-2.6.4/sbin/start-dfs.sh</code><br>检测是否启动成功分布式文件系统：<br>在master中输入jps<br>发现有NameNode、还有SecondaryNameNode说明Master中名称节点启动成功<br>在slave0，slave1输入jps<br>发现有DataNode说明slave机器数据节点启动成功  </p>
+<p>windows浏览器中检测master:50070中的DataNodes中有slave0，slave1两个子节点说明OK  </p>
+<p>启动yarn<br><code>/opt/hadoop-2.6.4/sbin/start-yarn.sh</code><br>检查Master中的jps<br>发现有resourceManager说明master OK<br>检查slave0，slave1中的jps<br>发现有NodeManager说明slave机器启动 OK  </p>
+<h3 id="失败常用解决方案："><a href="#失败常用解决方案：" class="headerlink" title="失败常用解决方案："></a>失败常用解决方案：</h3><ul>
+<li>暴力方案<br>在Master中:<br><code>/opt/hadoop-2.6.4/sbin/stop-yarn.sh</code><br><code>/opt/hadoop-2.6.4/sbin/stop-dfs.sh</code><br>查看Master，slave0,slave1 的jps<br>（如果除了jps进程还有其他进程，用<code>kill -9 进程号</code>强制杀死多余的进程）<br><code>rm -rf /opt/dfs/*</code>  删除dfs下的所有文件(一般只删除master下的,必要时可以检查slave)  </li>
+</ul>
+<p>在Master下面格式化所有<strong>namenode</strong><br><code>hdfs namenode -format</code><br><code>/opt/hadoop-2.6.4/sbin/start-dfs.sh</code>  </p>
+<p>master,slave0,slave1:<br><code>jps</code><br>发现在Master中有NameNode，SecondaryNameNode，在slave0，slave1发现有<br>DataNode，说明启动成功，缺少任何一个说明失败。  </p>
+<p>Master:<br><code>/opt/hadoop-2.6.4/sbin/start-yarn.sh</code><br>master,slave0,slave1:<br><code>jps</code><br>发现在Master中有resourceManager，在slave0，slave1发现有<br>NodeManager，说明启动成功，缺少任何一个说明失败。  </p>
+<h3 id="分布式存储—-分布式计算-MapReduce"><a href="#分布式存储—-分布式计算-MapReduce" class="headerlink" title="分布式存储—-分布式计算 MapReduce"></a>分布式存储—-分布式计算 MapReduce</h3><p>1.centos7安装Mysql：<br><code>cd /opt/</code><br><code>sudo yum install wget</code><br><code>wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</code><br><code>rpm -ivh mysql-community-release-el7-5.noarch.rpm</code><br><code>sudo yum install mysql-community-server</code>  </p>
+<p>上述命令会安装以下包：  </p>
+<ul>
+<li>apparmor</li>
+<li>mysql-client-5.7</li>
+<li>mysql-common</li>
+<li>mysql-server</li>
+<li>mysql-server-5.7</li>
+<li>mysql-server-core-5.7</li>
+</ul>
+<p>启动和关闭mysql服务器：<br><code>service mysql start</code><br><code>service mysql stop</code></p>
+<p>确认是否启动成功，mysql节点处于LISTEN状态表示启动成功：<br><code>sudo netstat -tap | grep mysql</code></p>
+<p>出现LISTEN说明启动成功</p>
+<p><img src="/images/pasted-1.png" alt="filename already exists, renamed">   </p>
+<p>进入mysql shell界面：<br><code>mysql -u root -p</code>  </p>
+<p>2.Mysql常用命令：  </p>
+<p>解决利用sqoop导入MySQL中文乱码的问题（可以插入中文，但不能用sqoop导入中文）导致导入时中文乱码的原因是character_set_server默认设置是latin1<br>显示编码格式<br><code>show variables like &quot;char%&quot;;</code><br>修改编码格式<br><code>set character_set_server=utf8;</code><br>显示数据库<br><code>show databases;</code><br>使用数据库<br><code>user mysql;</code><br>显示数据库<br><code>show tables;</code><br>显示数据表结构<br><code>describe user;</code><br>显示表中的记录<br><code>select * from 表名</code><br>创建数据库<br><code>create database aaa;</code><br>使用数据库aaa<br><code>use aaa;</code><br>创建表person<br><code>create table person(id int(3) auto_increment not null primary key,
+xm varchar(10),xb varchar(2),csny date);</code>  </p>
+<p>插入一条数据<br><code>insert into person values(null,&#39;zhangsan&#39;,&#39;m&#39;,&#39;2018-8-24&#39;);</code>  </p>
+<p><code>insert into person values(null,&#39;lisi&#39;,&#39;f&#39;,&#39;2018-8-23&#39;);</code>  </p>
+<p>查询出person表中所有的数据<br><code>select * from person;</code>  </p>
+<p>修改xm=lisi的csny字段<br><code>select * from person;</code><br><code>update person set csny=&#39;2018-08-22&#39; where xm=&#39;lisi&#39;;</code><br><code>select * from person;</code>  </p>
+<p>删除张三那条数据<br><code>select * from person;</code><br><code>delete from person where xm=&#39;zhangsan&#39;;</code><br><code>select * from person;</code>  </p>
+<p>删除表<br><code>drop table person;</code>  </p>
+<p>删除数据库<br><code>drop database aaa;</code><br>显示mysql数据库版本<br><code>show variables like &#39;version&#39;;</code><br><code>select version();</code>  </p>
+<p>3.安装Hive<br>首先上传<strong>apache-hive-1.2.1-bin.tar.gz</strong>到master的/opt/目录下<br>master：<br><code>cd /opt/</code><br>解压到指定/opt文件夹下<br><code>sudo tar -zxvf apache-hive-1.2.1-bin.tar.gz</code><br>重命名<strong>apache-hive-1.2.1-bin</strong>为hive<br><code>sudo mv apache-hive-1.2.1-bin hive</code>  </p>
+<p>4.配置环境变量<br><code>vi ~/.bashrc</code>  </p>
+<p>在文件末尾加入：  </p>
+<pre><code>export HIVE_HOME=/opt/hive
+export PATH=$PATH:$HIVE_HOME/bin</code></pre><p>生效配置文件<br><code>source ~/.bashrc</code></p>
+<p>5.修改/opt/hive/conf下的<strong>hive-site.xml</strong>,将hive原来自带的derby改成mysql  </p>
+<p><code>cd /opt/hive/conf</code><br>重命名<br><code>mv hive-default.xml.template hive-default.xml</code>  </p>
+<p>建立并且编辑<strong>hive-site.xml</strong><br><code>vi hive-site.xml</code>  </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;
+&lt;configuration&gt;
+  &lt;property&gt;
+    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;
+    &lt;value&gt;jdbc:mysql://localhost:3306/hive?createDatabaseIfNotExist=true&lt;/value&gt;
+    &lt;description&gt;JDBC connect string for a JDBC metastore&lt;/description&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
+    &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;
+    &lt;description&gt;Driver class name for a JDBC metastore&lt;/description&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
+    &lt;value&gt;hive&lt;/value&gt;
+    &lt;description&gt;username to use against metastore database&lt;/description&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
+    &lt;value&gt;hive&lt;/value&gt;
+    &lt;description&gt;password to use against metastore database&lt;/description&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><p>6.启动mysql数据库，新建hive数据库<br><code>mysql -u root -p</code>  </p>
+<p><code>show databases;</code><br>//新建一个Hive数据库，这个Hive数据库与<strong>hive-site.xml</strong>文件中//localhost:3306/hive的hive对应，用来保存hive元数据信息<br><code>create database hive;</code>  </p>
+<p>7.配置mysql允许hive接入<br>将所有数据库的所有表的所有权限都赋给hive用户，后面的hive适配hive-site.xml中配置的连接密码<br><code>grant all on *.* to hive@localhost identified by &#39;hive&#39;;</code><br>刷新mysql系统权限关系表<br><code>flush privileges;</code>  </p>
+<p>8.启动Hive<br>在启动Hive之前，先启动hadoop集群，但是咱们现在装的是伪分布式的hive配置，所以先将集群改成伪分布式：<br>修改master中hadoop下面的slave文件，将其中的slave改回master，使得master成为自己的slave  </p>
+<p>将mysql-connector的jar拷到hive/lib下面，此时会报版本冲突的错误,删除位于<strong>$HADOOP_HOME/share/hadoop/yarn/lib/jline-0.9.94.jar</strong>的 <strong>jline-0.9.94.jar</strong> 文件，重新启动hadooop,hive即可  </p>
+<p>停掉之前的分布式集群<br>master:<br><code>/opt/hadoop-2.6.4/sbin/stop-all.sh</code>(封装了stop-yarn.sh和stop-dfs.sh)<br><code>jps</code> (保证只剩下一个jps进程)  </p>
+<pre><code>cd /opt/dfs/
+rm -rf *
+hdfs namenode -format
+cd /opt/hadoop-2.6.4/sbin/start-dfs.sh
+jps</code></pre><p> （查看出来NameNode，DataNode， SecondaryNameNode）  </p>
+<p><code>cd /opt/hive/bin</code><br>启动Hive<br><code>hive</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/11/Day4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Day3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+  
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/11/Day3/">Day3</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/11/Day3/" class="archive-article-date">
+  	<time datetime="2019-07-11T05:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
+</a>
+        
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-单机版hadoop"><a href="#1-单机版hadoop" class="headerlink" title="1.单机版hadoop"></a>1.单机版hadoop</h3><p><code>cd opt/hadoop-2.6.4/etc/hadoop/</code><br><code>vi hadoop-env.sh</code> 文件末尾追加：<code>export JAVA_HOME=/opt/jdk1.8.0_101</code>  </p>
+<h3 id="2-伪分布式搭建"><a href="#2-伪分布式搭建" class="headerlink" title="2.伪分布式搭建"></a>2.伪分布式搭建</h3><p><code>cd /opt/hadoop-2.6.4/etc/hadoop/</code><br><code>vi core-site.xml</code></p>
+<pre><code>&lt;configuration&gt;
+        &lt;property&gt;
+                &lt;name&gt;fs:defaultFS&lt;/name&gt;
+                &lt;value&gt;hdfs://master:9000&lt;/value&gt;
+        &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><p><code>vi hdfs-site.xml</code>  </p>
+<pre><code>&lt;configuration&gt;
+        &lt;property&gt;
+                &lt;name&gt;dfs.replication&lt;/name&gt;
+                &lt;value&gt;1&lt;/value&gt;
+        &lt;/property&gt;
+
+&lt;/configuration&gt;</code></pre><p><code>hdfs namenode -format</code><br><code>:set nember显示行数</code><br><code>:22跳转到22行</code>  </p>
+<p><code>/opt/hadoop-2.6.4/sbin/start-dfs.sh</code><br><code>jps</code>  </p>
+<pre><code>2134 NameNode
+2248 DataNode
+2393 SecondaryNameNode</code></pre><p>浏览器中输入master的ip和端口号<br>查看dataNodes下是否有一个叫slave0的奴隶</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/11/Day3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Day2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+  
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/11/Day2/">Day2</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/11/Day2/" class="archive-article-date">
+  	<time datetime="2019-07-11T03:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-11</time>
+</a>
+        
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-看windows和linux能否相互ping通"><a href="#1-看windows和linux能否相互ping通" class="headerlink" title="1.看windows和linux能否相互ping通"></a>1.看windows和linux能否相互ping通</h3><p>Linux下用ifconfig查看ip是否正常<br>不正常的话<br><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code>（可用TAB自动补全）<br>查看网卡配置文件文件中的<code>onboot=yes</code>开机自启动  <code>no</code> 开机不启动  </p>
+<h3 id="2-修改hostname主机名称"><a href="#2-修改hostname主机名称" class="headerlink" title="2.修改hostname主机名称"></a>2.修改hostname主机名称</h3><p><code>vi /etc/sysconfig/network</code><br>编辑<code>HOSTNAME=Master</code><br><code>vi /etc/hostname</code><br>删除原来的内容，写入Master  </p>
+<h3 id="3-查看防火墙状态"><a href="#3-查看防火墙状态" class="headerlink" title="3.查看防火墙状态"></a>3.查看防火墙状态</h3><p><code>firewall-cmd --state</code>查看防火墙状态<br><code>systemctl stop firewalld.service</code> 停止当前防火墙<br><code>systemctl disable firewalld.service</code>永久禁用  </p>
+<h3 id="4-克隆slave"><a href="#4-克隆slave" class="headerlink" title="4.克隆slave"></a>4.克隆slave</h3><p>克隆两台虚拟机，分别命令为Slave0和Slave1  </p>
+<h3 id="5-机群是否互通"><a href="#5-机群是否互通" class="headerlink" title="5.机群是否互通"></a>5.机群是否互通</h3><p>分别相互ping三台机器，看是否相通<br>配置hosts文件，方便互相访问机群<br><code>vi /etc/hosts</code><br>文件末尾追加 master slave0 slave1之间的地址映射  </p>
+<p><code>scp /etc/hosts root@salve1:/etc/hosts</code>远程传输到其他几台  </p>
+<h3 id="6-配置无密码登陆"><a href="#6-配置无密码登陆" class="headerlink" title="6.配置无密码登陆"></a>6.配置无密码登陆</h3><p><code>ssh-keygen</code> 生成ssh公钥私钥串<br><code>cd ~/.ssh</code> 进入生成的.ssh目录<br><code>ssh root@salve1</code> 利用ssh远程登陆salve1 测试成功<br><code>scp id_rsa.pub root@slave0:~/.ssh/master.pub</code> 利用远程传输将master的公钥传到slave0的.ssh目录下，并且改名为<strong>master.pub</strong><br><code>cat master.pub &gt;&gt;authorized_keys</code> 进入slave0，将<strong>master.pub</strong>的文件追加到<strong>authorized_keys</strong>（原来没有）下面<br><code>chmod 600 authorized_keys</code> 更改authorized_keys的权限为600，600十进制为110 000 000 对应文件权限<strong>可读可写不可执行</strong><br><code>11</code> 查看详细信息  </p>
+<p>以上所有命令可以用<code>ssh-copy-id root@slave1</code>代替<br>最后完成master对master，slave0，slave1的无密码登陆，slave0对master,slave1对master的无密登陆  </p>
+<h3 id="7-配置jdk和Hadoop环境"><a href="#7-配置jdk和Hadoop环境" class="headerlink" title="7.配置jdk和Hadoop环境"></a>7.配置jdk和Hadoop环境</h3><p>利用<strong>ssh secure shell client</strong>将jdk和Hadoop压缩包传输到master<br>进入压缩包目录，利用<code>tar -zxvf</code> 文件名解压文件到当前目录<br><code>vi ~/.bashrc</code>编辑环境变量，配置环境<br>在<strong>~/.bashrc</strong>写入</p>
+<pre><code>export JAVA_HOME=/opt/jdk1.8.0_101
+export PATH=$PATH:$JAVA_HOME/bin
+export HADOOP_HOME=/opt/hadoop-2.6.4
+export PATH=$PATH:$HADOOP_HOME/bin</code></pre><p>保存并且退出<br><code>source ~/.bashrc</code>编译<br>查看java与hadoop版本看是否成功</p>
+<pre><code>java -v
+hadoop v</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/11/Day2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Day1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+  
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/10/Day1/">Day1</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/10/Day1/" class="archive-article-date">
   	<time datetime="2019-07-10T14:12:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
 </a>
         
@@ -344,7 +1466,7 @@ export PATH=$PATH:$HADOOP_HOME/bin</code></pre><p>保存并且退出<br><code>so
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/10/大数据实训/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/07/10/Day1/">展开全文 >></a>
         </p>
       
 
