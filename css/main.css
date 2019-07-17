@@ -1884,7 +1884,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2ab37d;
+  background: #d6baff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3201,8 +3201,8 @@ body {
   color: #f0d784;
 }
 * {
-  cursor: url("/images/1.jpg"), auto !important;
+  cursor: url("/images/favicon2.ico"), auto !important;
 }
 :active {
-  cursor: url("/images/1.jpg"), auto !important;
+  cursor: url("/images/favicon2.ico"), auto !important;
 }
