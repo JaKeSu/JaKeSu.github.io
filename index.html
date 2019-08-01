@@ -387,44 +387,14 @@
 
       
         
-          
-            <h3 id="1008-数组元素循环右移问题-20-分"><a href="#1008-数组元素循环右移问题-20-分" class="headerlink" title="1008 数组元素循环右移问题 (20 分)"></a>1008 数组元素循环右移问题 (20 分)</h3><p>一个数组<code>A</code>中存有<code>N</code>（&gt;0）个整数，在不允许使用另外数组的前提下，将每个整数循环向右移<code>M</code>（≥0）个位置，即将<code>A</code>中的数据由（A<sub>0</sub>A<sub>1</sub>⋯A<sub>N−1</sub>）变换为（A<sub>N−M</sub>⋯A<sub>N−1</sub>A<sub>0</sub> A<sub>1</sub>⋯A<sub>N−M−1</sub>）（最后<code>M</code>个数循环移至最前面的<code>M</code>个位置）。如果需要考虑程序移动数据的次数尽量少，要如何设计移动的方法？</p>
-<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h4><p>每个输入包含一个测试用例，第1行输入<code>N</code>（1≤N≤100）和<code>M</code>（≥0）；第2行输入<code>N</code>个整数，之间用空格分隔。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h4><p>在一行中输出循环右移<code>M</code>位以后的整数序列，之间用空格分隔，序列结尾不能有多余空格。</p>
-<h4 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h4><pre><code>6 2
-1 2 3 4 5 6</code></pre><h4 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h4><pre><code>5 6 1 2 3 4</code></pre><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>题目既然说不准用额外的数组，那我只能想到的是以前数据结构学过的链表反转来解决这个问题<br>循环右移其实相当于在数组内部进行反转，例如题目给出的6个元素右移2位，相当于先将整个数组反转为<code>6 5 4 3 2 1</code>，然后从<code>2</code>开始分割，前一部分和后一部分分别进行反转即<code>6 5|4 3 2 1</code>变为<code>5 6|1 2 3 4</code>。也就是最终答案<br>值得注意的是，几个测试点，向右移动<code>0</code>或者<code>n</code>位，当向右移动大于数组长度时，应理解为向右移动<code>m%n</code>位长度。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;cstdio&gt;
-#include&lt;iostream&gt;
-void reverse(int a[],int i,int j);
-int main(){
-    int n,m;
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-    m=m%n;
-    int a[n];
-    for(int i=0;i&lt;n;i++){
-        scanf(&quot;%d&quot;,&amp;a[i]);
-    }
-    reverse(a,0,n-1);
-    reverse(a,0,m-1);
-    reverse(a,m,n-1);
-    for(int i=0;i&lt;n;i++){
-        printf(&quot;%d&quot;,a[i]);
-        if(i!=n-1)//注意，最后一个输出没有空格
-        printf(&quot; &quot;);
-    }
-    return 0;
-
-
-}
-void reverse(int a[],int i,int j){//数组反转函数
-    int temp;
-    for(int n=i,m=j;n&lt;m;n++,m--){
-        temp=a[n];
-        a[n]=a[m];
-        a[m]=temp;
-    }
-}</code></pre>
-          
+          <h3 id="1008-数组元素循环右移问题-20-分"><a href="#1008-数组元素循环右移问题-20-分" class="headerlink" title="1008 数组元素循环右移问题 (20 分)"></a>1008 数组元素循环右移问题 (20 分)</h3><p>一个数组<code>A</code>中存有<code>N</code>（&gt;0）个整数，在不允许使用另外数组的前提下，将每个整数循环向右移<code>M</code>（≥0）个位置，即将<code>A</code>中的数据由（A<sub>0</sub>A<sub>1</sub>⋯A<sub>N−1</sub>）变换为（A<sub>N−M</sub>⋯A<sub>N−1</sub>A<sub>0</sub> A<sub>1</sub>⋯A<sub>N−M−1</sub>）（最后<code>M</code>个数循环移至最前面的<code>M</code>个位置）。如果需要考虑程序移动数据的次数尽量少，要如何设计移动的方法？</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/01/1008-数组元素循环右移问题-20-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -597,69 +567,14 @@ void reverse(int a[],int i,int j){//数组反转函数
 
       
         
-          
-            <h3 id="1007-素数对猜想-20-分"><a href="#1007-素数对猜想-20-分" class="headerlink" title="1007 素数对猜想 (20 分)"></a>1007 素数对猜想 (20 分)</h3><p>让我们定义d<sub>n</sub>为:d<sub>n</sub>=p<sub>n+1</sub>−p<sub>n</sub> ，其中p<sub>i</sub> 是第<code>i</code>个素数。显然有d<sub>1</sub> =1，且对于<code>n&gt;1</code>有d<sub>n</sub>是偶数。“素数对猜想”认为“存在无穷多对相邻且差为2的素数”。</p>
-<p>现给定任意正整数<code>N</code>(&lt;10<sup>5</sup>)，请计算不超过N的满足猜想的素数对的个数。 </p>
-<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h4><p>输入在一行给出正整数N。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h4><p>在一行中输出不超过N的满足猜想的素数对的个数。</p>
-<h4 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h4><pre><code>20</code></pre><h4 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h4><pre><code>4</code></pre><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>第一次直接将题目范围内的所有素数全部存在数组<code>prime</code>中<br>第二次找到最后小于N的素数在<code>prime</code>中的下标k。例如<code>19</code>是小于<code>20</code>的最后一个素数，他在数组<code>prime</code>中的下标为<code>7</code>(此时prime为：<code>2,3,5,7,11,13,17,19,...</code>)<br>遍历前k个素数，计算素数对的个数<code>count</code>.<br>也可以在寻找<code>n</code>的素数的同时，计算两个相邻的素数相差是否为<code>2</code>，然后计数。</p>
-<h4 id="代码1："><a href="#代码1：" class="headerlink" title="代码1："></a>代码1：</h4><pre><code>#include&lt;cstdio&gt;
-#include&lt;cmath&gt;
-const int maxn=100000;
-int prime[maxn],pNum=0;
-bool p[maxn]={0};
-void Find_Prime(){
-    for(int i=2;i&lt;maxn;i++){
-        if(p[i]==false){//计算素数，通过哈希表法，为素数的哈希值为false
-            prime[pNum++]=i;
-            for(int j=i+i;j&lt;maxn;j+=i){//因为在计算过程中，只要是素数的倍数，一定不会再是素数，从而减少计算量
-                p[j]=true;
-            }
-        }
-    }
-}
-int main(){
-    Find_Prime();
-    int n,k,count=0;
-    scanf(&quot;%d&quot;,&amp;n);
-    for(int i=0;i&lt;n;i++){
-        if(prime[i]&gt;n)//找到最后一个小于n的素数在prime中的下标
-        {
-            k=i-1;
-            break;
-        }
-    }
-    for(int i=0;i&lt;k;i++){
-        if(prime[i+1]-prime[i]==2)
-        count++;
-    }
-    printf(&quot;%d&quot;,count);
-    return 0;
-}</code></pre><h4 id="代码2："><a href="#代码2：" class="headerlink" title="代码2："></a>代码2：</h4><pre><code>#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-using namespace std;
-int main()
-{
-    int n;
-    cin&gt;&gt;n;
-    int i,j,cnt=0;
-    int pre=2;//记录前一个素数
-    for(i=3;i&lt;=n;i++)
-    {
-        for(j=2;j&lt;=sqrt(i);j++)
-        if(i%j==0)
-        break;
-        if(j&gt;sqrt(i))
-        {
-            if(i-pre==2)
-            cnt++;
-            pre=i;
-        }
-    }
-    cout&lt;&lt;cnt;    
-    return 0;
-}</code></pre>
-          
+          <h3 id="1007-素数对猜想-20-分"><a href="#1007-素数对猜想-20-分" class="headerlink" title="1007 素数对猜想 (20 分)"></a>1007 素数对猜想 (20 分)</h3><p>让我们定义d<sub>n</sub>为:d<sub>n</sub>=p<sub>n+1</sub>−p<sub>n</sub> ，其中p<sub>i</sub> 是第<code>i</code>个素数。显然有d<sub>1</sub> =1，且对于<code>n&gt;1</code>有d<sub>n</sub>是偶数。“素数对猜想”认为“存在无穷多对相邻且差为2的素数”。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/01/B1007-素数对猜想-20-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -832,56 +747,15 @@ int main()
 
       
         
-          
-            <h3 id="1005-继续-3n-1-猜想-25-分"><a href="#1005-继续-3n-1-猜想-25-分" class="headerlink" title="1005 继续(3n+1)猜想 (25 分)"></a>1005 继续(3n+1)猜想 (25 分)</h3><p>卡拉兹(Callatz)猜想已经在1001中给出了描述。在这个题目里，情况稍微有些复杂。</p>
+          <h3 id="1005-继续-3n-1-猜想-25-分"><a href="#1005-继续-3n-1-猜想-25-分" class="headerlink" title="1005 继续(3n+1)猜想 (25 分)"></a>1005 继续(3n+1)猜想 (25 分)</h3><p>卡拉兹(Callatz)猜想已经在1001中给出了描述。在这个题目里，情况稍微有些复杂。</p>
 <p>当我们验证卡拉兹猜想的时候，为了避免重复计算，可以记录下递推过程中遇到的每一个数。例如对 n=3 进行验证的时候，我们需要计算 3、5、8、4、2、1，则当我们对 n=5、8、4、2 进行验证的时候，就可以直接判定卡拉兹猜想的真伪，而不需要重复计算，因为这 4 个数已经在验证3的时候遇到过了，我们称 5、8、4、2 是被 3“覆盖”的数。我们称一个数列中的某个数 n 为“关键数”，如果 n 不能被数列中的其他数字所覆盖。</p>
-<p>现在给定一系列待验证的数字，我们只需要验证其中的几个关键数，就可以不必再重复验证余下的数字。你的任务就是找出这些关键数字，并按从大到小的顺序输出它们。</p>
-<h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>每个测试输入包含 1 个测试用例，第 1 行给出一个正整数 K (&lt;100)，第 2 行给出 K 个互不相同的待验证的正整数 n (1&lt;n≤100)的值，数字间用空格隔开。</p>
-<h4 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h4><p>每个测试用例的输出占一行，按从大到小的顺序输出关键数字。数字间用 1 个空格隔开，但一行中最后一个数字后没有空格。</p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre><code>6
-3 5 6 7 8 11</code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre><code>7 6</code></pre><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>既然是在验证卡拉兹猜想的过程中，出现的数算是重复的，那么我们可以用一个哈希表来并保存这些数字是否出现过的状态。<br>题目给出了最大100个正整数，那么对应的我们用一个足够大的哈希表来保存这些整数的状态，0表示没有出现过，每次计算过程中出现过中间数的我们让这个哈希键的值+1，也就是不为0。<br>最后对照输入整数和哈希表，找出其中为0的那些数字，保存在另外一个数组中，排序输出即可。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;cstdio&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-
-const int maxn=50000;//哈希表大小
-bool cmp(int a,int b){
-    return a&gt;b;
-}
-int main(){
-    int k;
-    scanf(&quot;%d&quot;,&amp;k);
-    int a[k];
-    int hash[maxn]={0};
-    int b[k]={0};
-    for(int i=0;i&lt;k;i++){
-        scanf(&quot;%d&quot;,&amp;a[i]);
-        int temp=a[i];
-        while(temp!=1){//计算猜想
-            if(temp%2==0){
-                temp/=2;
-            }else{
-                temp=(temp*3+1)/2;
-
-            }
-             hash[temp]++;//每次中间数出现，我们让其哈希表中值+1
-        }
-
-    }
-    for(int i=0;i&lt;k;i++){//找出哈希表中为0的那些数即没有出现的数字
-        if(hash[a[i]]==0){
-            b[i]=a[i];
-        }
-    }
-    sort(b,b+k,cmp);//排序
-    for(int i=0;i&lt;k;i++){
-        if(b[i]==0)break;
-        printf(&quot;%d%s&quot;,b[i],b[i+1]&gt;0?&quot; &quot;:&quot;&quot;);//注意这里最后一个输出没有空格
-    }
-
-
-}</code></pre>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/01/1005-继续-3n-1-猜想-25-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1054,47 +928,14 @@ int main(){
 
       
         
-          
-            <h3 id="1004-成绩排名-20-分"><a href="#1004-成绩排名-20-分" class="headerlink" title="1004 成绩排名 (20 分)"></a>1004 成绩排名 (20 分)</h3><p>读入 n（&gt;0）名学生的姓名、学号、成绩，分别输出成绩最高和成绩最低学生的姓名和学号。  </p>
-<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>每个测试输入包含 1 个测试用例，格式为</p>
-<pre><code>第 1 行：正整数 n
-第 2 行：第 1 个学生的姓名 学号 成绩
-第 3 行：第 2 个学生的姓名 学号 成绩
-  ... ... ...
-第 n+1 行：第 n 个学生的姓名 学号 成绩</code></pre><p>其中姓名和学号均为不超过 10 个字符的字符串，成绩为 0 到 100 之间的一个整数，这里保证在一组测试用例中没有两个学生的成绩是相同的。</p>
-<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>对每个测试用例输出 2 行，第 1 行是成绩最高学生的姓名和学号，第 2 行是成绩最低学生的姓名和学号，字符串间有 1 空格。</p>
-<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code>3
-Joe Math990112 89
-Mike CS991301 100
-Mary EE990830 95</code></pre><h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code>Mike CS991301
-Joe Math990112</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code>#include&lt;cstdio&gt;
-#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-
-struct student{
-    string name;
-    string num;
-    int score;
-
-};
-bool cmp(student a,student b){//按照分数高低排序的cmp函数
-    return a.score&gt;b.score;
-}
-int main(){
-    int n;
-    cin&gt;&gt;n;
-    student st[n];
-    for(int i=0;i&lt;n;i++){
-        cin&gt;&gt;st[i].name&gt;&gt;st[i].num&gt;&gt;st[i].score;
-    }
-    sort(st,st+n,cmp);
-    cout&lt;&lt;st[0].name&lt;&lt;&apos; &apos;&lt;&lt;st[0].num&lt;&lt;endl;
-    cout&lt;&lt;st[n-1].name&lt;&lt;&apos; &apos;&lt;&lt;st[n-1].num;
-
-    return 0;
-}</code></pre>
-          
+          <h3 id="1004-成绩排名-20-分"><a href="#1004-成绩排名-20-分" class="headerlink" title="1004 成绩排名 (20 分)"></a>1004 成绩排名 (20 分)</h3><p>读入 n（&gt;0）名学生的姓名、学号、成绩，分别输出成绩最高和成绩最低学生的姓名和学号。  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/01/B1004-成绩排名-20-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1267,54 +1108,14 @@ int main(){
 
       
         
-          
-            <h3 id="1003-我要通过！-20-分"><a href="#1003-我要通过！-20-分" class="headerlink" title="1003 我要通过！ (20 分)"></a>1003 我要通过！ (20 分)</h3><p>“答案正确”是自动判题系统给出的最令人欢喜的回复。本题属于 PAT 的“答案正确”大派送 —— 只要读入的字符串满足下列条件，系统就输出“答案正确”，否则输出“答案错误”。  </p>
-<h4 id="得到“答案正确”的条件是："><a href="#得到“答案正确”的条件是：" class="headerlink" title="得到“答案正确”的条件是："></a>得到“答案正确”的条件是：</h4><p>字符串中必须仅有 <code>P</code>、<code>A</code>、<code>T</code>这三种字符，不可以包含其它字符；<br>任意形如 <code>xPATx</code> 的字符串都可以获得“答案正确”，其中 <code>x</code>或者是空字符串，或者是仅由字母 <code>A</code>组成的字符串；<br>如果 <code>aPbTc</code> 是正确的，那么 <code>aPbATca</code> 也是正确的，其中 <code>a</code>、 <code>b</code>、 <code>c</code> 均或者是空字符串，或者是仅由字母 <code>A</code> 组成的字符串。<br>现在就请你为 <code>PAT</code> 写一个自动裁判程序，判定哪些字符串是可以获得“答案正确”的。    </p>
-<h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>每个测试输入包含 1 个测试用例。第 1 行给出一个正整数 <code>n (&lt;10)</code>，是需要检测的字符串个数。接下来每个字符串占一行，字符串长度不超过 <code>100</code>，且不包含空格。</p>
-<h4 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h4><p>每个字符串的检测结果占一行，如果该字符串可以获得“答案正确”，则输出 <code>YES</code>，否则输出 <code>NO</code>。  </p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre><code>8
-PAT
-PAAT
-AAPATAA
-AAPAATAAAA
-xPATx
-PT
-Whatever
-APAAATAA</code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre><code>YES
-YES
-YES
-YES
-NO
-NO
-NO
-NO</code></pre><h4 id="分析：-源自柳神博客"><a href="#分析：-源自柳神博客" class="headerlink" title="分析：(源自柳神博客)"></a>分析：(源自柳神博客)</h4><p>任意形如 xPATx 的字符串都可以获得“答案正确”，其中 x 或者是空字符串，或者是仅由字母 A 组成的字符串；<br>那么正确的有这些：<br>PAT<br>APATA<br>AAPATAA<br>AAAPATAAA<br>…<br>其实就是中间一个A左右加上等量的A（不加也行）都是正确的。  </p>
-<p>如果 aPbTc 是正确的，那么 aPbATca 也是正确的，其中 a, b, c 均或者是空字符串，或者是仅由字母 A 组成的字符串。<br>拿上面的那几个正确的举例子，那么正确的有这些：<br>PAT —— 对于 aPbTc 来说ac是空，b是A。所以 PAAT 是正确的。同理PAAAAAT中间加多少个A都是正确哒～<br>APATA —— 对于aPbTc来说，abc都是A。所以 APAATAA 是正确的。再类推一下，那么 APAAATAAA 是正确的。<br>AAPATAA —— 对于aPbTc来说，a和c是AA，b是A。所以AAPAATAAAA是正确的，再类推一下，AAPAAATAAAAAA 是正确的～～<br>所以说规律就是，可以在P和T中间加A并且在T后面加A，要求必须是，中间加上一个A，末尾就得加上几倍的(P前面A的那个字符串)。换句话说就是，中间的A的个数如果是3，那么末尾的A的个数就得是开头A的个数的3倍。很巧，当中间A为一个的时候，末尾和开头A的个数必须相等正好是第二条的要求～  </p>
-<p>所以一句话总结字符串的要求：只能有一个P一个T，中间末尾和开头可以随便插入A。但是必须满足开头的A的个数 * 中间的A的个数 = 结尾的A的个数，而且P和T中间不能没有A～  </p>
-<pre><code>#include&lt;map&gt;
-#include&lt;iostream&gt;
-using namespace std;
-int main(){
-    int n,p,t;
-    string s;
-    cin&gt;&gt;n;
-    for(int i=0;i&lt;n;i++){
-        cin&gt;&gt;s;
-        map&lt;char,int&gt; m;
-        for(int j=0;j&lt;s.size();j++){
-            m[s[j]]++;
-            if(s[j]==&apos;P&apos;)p=j;
-            if(s[j]==&apos;T&apos;)t=j;
-        }
-        if(m[&apos;P&apos;]==1&amp;&amp;m[&apos;T&apos;]==1&amp;&amp;m[&apos;A&apos;]!=0&amp;&amp;m.size()==3&amp;&amp;t-p!=1&amp;&amp;p*(t-p-1)==s.length()-t-1)
-        printf(&quot;YES\n&quot;);
-        else
-        printf(&quot;NO\n&quot;);
-
-    }
-    return 0;
-
-}</code></pre>
-          
+          <h3 id="1003-我要通过！-20-分"><a href="#1003-我要通过！-20-分" class="headerlink" title="1003 我要通过！ (20 分)"></a>1003 我要通过！ (20 分)</h3><p>“答案正确”是自动判题系统给出的最令人欢喜的回复。本题属于 PAT 的“答案正确”大派送 —— 只要读入的字符串满足下列条件，系统就输出“答案正确”，否则输出“答案错误”。  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/01/B1003-我要通过！-20-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1487,99 +1288,14 @@ int main(){
 
       
         
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>读入一个只包含 +, -, *, / 的非负整数计算表达式，计算该表达式的值。</p>
-<h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><p>测试输入包含若干测试用例，每个测试用例占一行，每行不超过200个字符，整数和运算符之间用一个空格分隔。没有非法表达式。当一行中只有0时输入结束，相应的结果不要输出。</p>
-<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>对每个测试用例输出1行，即该表达式的值，精确到小数点后2位。</p>
-<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><p><code>30 / 90 - 26 + 97 - 5 - 6 - 13 / 88 * 6 + 51 / 29 + 79 * 87 + 57 * 920</code></p>
-<h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><p><code>12178.21</code></p>
-<pre><code>#include&lt;cstdio&gt;
-#include&lt;iostream&gt;
-#include&lt;stack&gt;
-#include&lt;string&gt;
-#include&lt;queue&gt;
-#include&lt;map&gt;
-using namespace std;
-
-struct node{//存储操作符或者数字
-    double num;
-    char op;
-    bool flag;
-};
-
-string str;//记录读入的计算式
-stack&lt;node&gt; s;
-queue&lt;node&gt; q;
-map&lt;char,int&gt;op;
-
-void Change(){
-    node temp;//接受操作数或者操作符
-    for(int i=0;i&lt;str.length();){
-        if(str[i]&gt;=&apos;0&apos;&amp;&amp;str[i]&lt;=&apos;9&apos;){
-            temp.flag=true;//读入的是操作数
-            temp.num=str[i++]-&apos;0&apos;;
-            while(i&lt;str.length()&amp;&amp;str[i]&gt;=&apos;0&apos;&amp;&amp;str[i]&lt;=&apos;9&apos;){//计算操作数
-                temp.num=temp.num*10+(str[i]-&apos;0&apos;);
-                i++;
-            }
-            q.push(temp);//放入后缀表达式队列
-        }else
-        {
-            temp.flag=false;
-            while(!s.empty()&amp;&amp;op[str[i]]&lt;=op[s.top().op]){//当读入的操作符的优先级小于栈顶的优先级
-                q.push(s.top());//将栈顶的操作符不断弹出，直到栈顶优先级小于读入操作符
-                s.pop();
-            }
-            temp.op=str[i];//将读入的操作符放入栈中
-            s.push(temp);
-            i++;
-        }
-
-
-    }
-    while(!s.empty()){//读完表达式值后，如果栈不为空，则将所有的元素弹出进后缀表达式队列
-        q.push(s.top());
-        s.pop();
-
-    }
-}
-double Cal(){
-    double temp1,temp2;
-    node cur,temp;
-    while(!q.empty()){//队列不为空依次出队列
-        cur=q.front();
-        q.pop();
-        if(cur.flag==true)s.push(cur);//若出队元素为操作数，压入栈中
-        else{//若出队元素为操作符，则取出栈顶两个元素，进行运算
-            temp2=s.top().num;//注意 先出栈的为第二个操作数
-            s.pop();
-            temp1=s.top().num;
-            s.pop();
-            temp.flag=true;
-            if(cur.op==&apos;+&apos;)temp.num=temp1+temp2;
-            else if(cur.op==&apos;*&apos;)temp.num=temp1*temp2;
-            else if(cur.op==&apos;-&apos;)temp.num=temp1-temp2;
-            else temp.num=temp1/temp2;
-            s.push(temp);//计算完后，再次压入栈中
-        }
-    }
-    return s.top().num;
-
-}
-int main(){
-    op[&apos;+&apos;]=op[&apos;-&apos;]=1;//设置操作符优先级
-    op[&apos;*&apos;]=op[&apos;/&apos;]=2;
-    while(getline(cin,str),str!=&quot;0&quot;){
-        for(string::iterator it=str.end();it!=str.begin();it--){
-            if(*it==&apos; &apos;)str.erase(it);//去除空格
-        }
-        while(!s.empty())s.pop();
-        Change();
-        printf(&quot;%.2f\n&quot;,Cal());
-
-    }return 0;
-}</code></pre>
-          
+          <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>读入一个只包含 +, -, *, / 的非负整数计算表达式，计算该表达式的值。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/22/快速幂取模/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
