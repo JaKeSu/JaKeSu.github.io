@@ -387,107 +387,14 @@
 
       
         
-          
-            <h3 id="1043-Is-It-a-Binary-Search-Tree-25-分"><a href="#1043-Is-It-a-Binary-Search-Tree-25-分" class="headerlink" title="1043 Is It a Binary Search Tree (25 分)"></a>1043 Is It a Binary Search Tree (25 分)</h3><p>A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:  </p>
-<p>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than or equal to the node’s key.<br>Both the left and right subtrees must also be binary search trees.<br>If we swap the left and right subtrees of every node, then the resulting tree is called the Mirror Image of a BST.  </p>
-<p>Now given a sequence of integer keys, you are supposed to tell if it is the preorder traversal sequence of a BST or the mirror image of a BST.  </p>
-<h4 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h4><p>Each input file contains one test case. For each case, the first line contains a positive integer <code>N</code>(≤1000). Then <code>N</code> integer keys are given in the next line. All the numbers in a line are separated by a space.  </p>
-<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case, first print in a line YES if the sequence is the preorder traversal sequence of a BST or the mirror image of a BST, or NO if not. Then if the answer is YES, print in the next line the postorder traversal sequence of that tree. All the numbers in a line must be separated by a space, and there must be no extra space at the end of the line.  </p>
-<h4 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a>Sample Input 1:</h4><pre><code>7
-8 6 5 7 10 8 11</code></pre><h4 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a>Sample Output 1:</h4><pre><code>YES
-5 7 6 8 11 10 8</code></pre><h4 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a>Sample Input 2:</h4><pre><code>7
-8 10 11 8 6 7 5</code></pre><h4 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a>Sample Output 2:</h4><pre><code>YES
-11 8 10 7 5 6 8</code></pre><h4 id="Sample-Input-3"><a href="#Sample-Input-3" class="headerlink" title="Sample Input 3:"></a>Sample Input 3:</h4><pre><code>7
-8 6 8 5 10 9 11</code></pre><h4 id="Sample-Output-3"><a href="#Sample-Output-3" class="headerlink" title="Sample Output 3:"></a>Sample Output 3:</h4><pre><code>NO</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><ul>
-<li>前面是二叉搜索树的介绍，然后有一点，如果交换这棵树的每一个左右子树，结果叫做这棵二叉搜索树的镜像树。  </li>
-<li>现在给你一组整数序列，要求你判断是否是一棵二叉搜索树或者其镜像的先序遍历。  </li>
-<li>输入样例格式为两行，第一行为节点个数，第二行为这棵树的节点序列  </li>
-<li>输出格式：<br>如果满足题意，输出YES，并且输出这棵树的后序遍历结果，如果不满足题意，输出NO</li>
-</ul>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>这道题看着复杂，其实思路很清晰。</p>
-<ul>
-<li>首先用一个vector保存输入的序列，然后对输入的序列进行建树。</li>
-<li>分别用一个vector保存这棵树的先序、后序遍历结果和镜像先序、后序遍历结果</li>
-<li>比较输入序列和前序遍历结果以及镜像前序遍历结果，如果相等，则对相应的后序vector进行遍历输出即可</li>
-</ul>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;cstdio&gt;
-#include&lt;vector&gt;
-using namespace std;
-struct node{
-    int data;
-    node *left,*right;
-
-};
-
-void Insert(node* &amp;root,int data){
-    if(root==NULL){
-        root=new node;
-        root-&gt;data=data;
-        root-&gt;left=NULL;
-        root-&gt;right=NULL;
-        return ;
-    }
-    if(data&lt; root-&gt;data)Insert(root-&gt;left,data);
-    else Insert(root-&gt;right,data);
-}
-
-void preOrder(node *root,vector&lt;int&gt;&amp;vi){
-    if(root==NULL)return ;
-    vi.push_back(root-&gt;data);
-    preOrder(root-&gt;left,vi);
-    preOrder(root-&gt;right,vi);
-}
-void preOrderMirror(node *root,vector&lt;int&gt;&amp;vi){
-    if(root==NULL)return;
-    vi.push_back(root-&gt;data);
-    preOrderMirror(root-&gt;right,vi);
-    preOrderMirror(root-&gt;left,vi);
-}
-void postOrder(node *root,vector&lt;int&gt;&amp;vi){
-    if(root==NULL)return ;
-    postOrder(root-&gt;left,vi);
-    postOrder(root-&gt;right,vi);
-    vi.push_back(root-&gt;data);
-
-}
-void postOrderMirror(node *root,vector&lt;int&gt;&amp;vi){
-    if(root==NULL)return;
-    postOrderMirror(root-&gt;right,vi);
-    postOrderMirror(root-&gt;left,vi);
-    vi.push_back(root-&gt;data);
-}
-
-int main(){
-    int n,data;
-    node * root=NULL;
-    vector&lt;int&gt;origin,pre,post,preM,postM;
-    scanf(&quot;%d&quot;,&amp;n);
-    for(int i=0;i&lt;n;i++){
-        scanf(&quot;%d&quot;,&amp;data);
-        origin.push_back(data);
-        Insert(root,data);
-    }
-    preOrder(root,pre);
-    preOrderMirror(root,preM);
-    postOrder(root,post);
-    postOrderMirror(root,postM);
-    if(origin==pre){
-        printf(&quot;YES\n&quot;);
-        for(int i=0;i&lt;post.size();i++){
-            printf(&quot;%d&quot;,post[i]);
-            if(i&lt;post.size()-1)printf(&quot; &quot;);
-        }
-    }else if(origin==preM){
-        printf(&quot;YES\n&quot;);
-        for(int i=0;i&lt;postM.size();i++){
-            printf(&quot;%d&quot;,postM[i]);
-            if(i&lt;postM.size()-1)printf(&quot; &quot;);
-        }
-    }else printf(&quot;NO\n&quot;);
-    return 0;
-
-}</code></pre>
-          
+          <h3 id="1043-Is-It-a-Binary-Search-Tree-25-分"><a href="#1043-Is-It-a-Binary-Search-Tree-25-分" class="headerlink" title="1043 Is It a Binary Search Tree (25 分)"></a>1043 Is It a Binary Search Tree (25 分)</h3><p>A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -660,49 +567,15 @@ int main(){
 
       
         
-          
-            <h3 id="1002-A-B-for-Polynomials-25-分"><a href="#1002-A-B-for-Polynomials-25-分" class="headerlink" title="1002 A+B for Polynomials (25 分)"></a>1002 A+B for Polynomials (25 分)</h3><p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
+          <h3 id="1002-A-B-for-Polynomials-25-分"><a href="#1002-A-B-for-Polynomials-25-分" class="headerlink" title="1002 A+B for Polynomials (25 分)"></a>1002 A+B for Polynomials (25 分)</h3><p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
 <p>Input Specification:<br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:</p>
-<p>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub>  </p>
-<p>where <code>K</code> is the number of nonzero terms in the polynomial, N<sub>i</sub> and aN<sub>i</sub> (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤N<sub>K</sub> &lt;⋯&lt; N<sub>2</sub>&lt; N<sub>1</sub> ≤1000.</p>
-<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
-<h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h4><pre><code>2 1 2.4 0 3.2
-2 2 1.5 1 0.5</code></pre><h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h4><pre><code>3 2 1.5 1 2.9 0 3.2</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>题目的意思，大概就是给你两个多项式，让你计算他们的和。<br>每一个输入样例包含两行，每一行为一个多项式，格式是：<br>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub><br>这样子的。<br>其中k为非零项的项数，然后k组数据，每一组包含一个N<sub>K</sub> 和一个      aN<sub>K</sub>  ，前者为幂，后者为系数。<br>输出也是这个格式。</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>用两个数组分别保存两个多项式，其中数组下标作为幂，数组值作为系数，遍历两个数组，对应下标相加，结果保存在a数组中，最后对于其中系数不为0的项进行输出即可。0.0</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;iostream&gt;
-using namespace std;
-const int maxn = 1001;
-double a[maxn], b[maxn];//定义两个多项式数组，用数组下标保存幂，数组值保存系数
-int k;
-void read(double a[])//读入多项式
-{
-    scanf(&quot;%d&quot;, &amp;k);
-    for (int i = 0; i &lt; k; i++)
-    {
-        int exp;
-        double coef;
-        scanf(&quot;%d%lf&quot;, &amp;exp, &amp;coef);
-        a[exp] = coef;
-    }
-}
-int main()
-{
-    read(a);
-    read(b);
-    int cnt = 0;
-    for (int i = 0; i &lt; maxn; i++)//进行两个多项式相加的运算，结果保存到a数组
-    {
-        a[i] += b[i];
-        if (a[i])cnt++;//记录非零项项数
-    }
-    printf(&quot;%d&quot;, cnt);
-    for (int i = maxn; i &gt;= 0; i--)
-    {
-        if (a[i])printf(&quot; %d %.1f&quot;, i, a[i]);
-    }
-    return 0;
-}</code></pre>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/03/A1002-A-B-for-Polynomials-25-分/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2481,6 +2354,24 @@ int main()
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
 
 
 

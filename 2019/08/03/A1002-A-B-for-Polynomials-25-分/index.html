@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="十元">
 <meta property="og:description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T08:55:24.275Z">
+<meta property="og:updated_time" content="2019-08-03T10:00:32.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A1002 A+B for Polynomials (25 分)">
 <meta name="twitter:description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
@@ -333,6 +333,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/03/A1002-A-B-for-Polynomials-25-分/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/08/03/A1002-A-B-for-Polynomials-25-分/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -390,6 +400,7 @@
       
         <h3 id="1002-A-B-for-Polynomials-25-分"><a href="#1002-A-B-for-Polynomials-25-分" class="headerlink" title="1002 A+B for Polynomials (25 分)"></a>1002 A+B for Polynomials (25 分)</h3><p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
 <p>Input Specification:<br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:</p>
+<a id="more"></a>
 <p>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub>  </p>
 <p>where <code>K</code> is the number of nonzero terms in the polynomial, N<sub>i</sub> and aN<sub>i</sub> (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤N<sub>K</sub> &lt;⋯&lt; N<sub>2</sub>&lt; N<sub>1</sub> ≤1000.</p>
 <h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
@@ -504,6 +515,16 @@ int main()
 
           
 
+  
+
+    <div class="comments" id="comments">
+      
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display:none"></div>
+      
+    </div>
+
+  
   
 
 
@@ -823,6 +844,52 @@ int main()
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'JaKeSu# MUST HAVE, Your Github ID',
+            repo: 'comment',
+            
+            lang: "auto# Force language, or auto switch by theme" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'f20a2da1886bdfca3b39751220d166b0985e7611',
+            
+                client_id: '6d94ec9c10eb34d68f9b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
 
 
 

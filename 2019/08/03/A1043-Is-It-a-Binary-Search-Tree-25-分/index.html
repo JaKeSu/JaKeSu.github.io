@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1043 Is It a Binary Search Tree (25 分)A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:   The left subtree of a node contains only nodes with keys">
+<meta name="description" content="1043 Is It a Binary Search Tree (25 分)A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:">
 <meta name="keywords" content="PAT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A1043 Is It a Binary Search Tree (25 分)">
 <meta property="og:url" content="http://yoursite.com/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="1043 Is It a Binary Search Tree (25 分)A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:   The left subtree of a node contains only nodes with keys">
+<meta property="og:description" content="1043 Is It a Binary Search Tree (25 分)A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T09:13:40.182Z">
+<meta property="og:updated_time" content="2019-08-03T10:00:36.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A1043 Is It a Binary Search Tree (25 分)">
-<meta name="twitter:description" content="1043 Is It a Binary Search Tree (25 分)A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:   The left subtree of a node contains only nodes with keys">
+<meta name="twitter:description" content="1043 Is It a Binary Search Tree (25 分)A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:">
 
 
 
@@ -333,6 +333,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -389,6 +399,7 @@
 
       
         <h3 id="1043-Is-It-a-Binary-Search-Tree-25-分"><a href="#1043-Is-It-a-Binary-Search-Tree-25-分" class="headerlink" title="1043 Is It a Binary Search Tree (25 分)"></a>1043 Is It a Binary Search Tree (25 分)</h3><p>A Binary Search Tree (BST) is recursively defined as a binary tree which has the following properties:  </p>
+<a id="more"></a>
 <p>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than or equal to the node’s key.<br>Both the left and right subtrees must also be binary search trees.<br>If we swap the left and right subtrees of every node, then the resulting tree is called the Mirror Image of a BST.  </p>
 <p>Now given a sequence of integer keys, you are supposed to tell if it is the preorder traversal sequence of a BST or the mirror image of a BST.  </p>
 <h4 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h4><p>Each input file contains one test case. For each case, the first line contains a positive integer <code>N</code>(≤1000). Then <code>N</code> integer keys are given in the next line. All the numbers in a line are separated by a space.  </p>
@@ -558,6 +569,16 @@ int main(){
 
           
 
+  
+
+    <div class="comments" id="comments">
+      
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display:none"></div>
+      
+    </div>
+
+  
   
 
 
@@ -877,6 +898,52 @@ int main(){
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'JaKeSu# MUST HAVE, Your Github ID',
+            repo: 'comment',
+            
+            lang: "auto# Force language, or auto switch by theme" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'f20a2da1886bdfca3b39751220d166b0985e7611',
+            
+                client_id: '6d94ec9c10eb34d68f9b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
 
 
 
