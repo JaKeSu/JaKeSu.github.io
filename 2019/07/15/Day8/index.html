@@ -575,11 +575,11 @@ public class WordCountDriver {
 
     <div class="comments" id="comments">
       
-        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
+        <div id="gitment-container"></div>
       
     </div>
 
+  
   
   
 
@@ -886,11 +886,6 @@ public class WordCountDriver {
 <!-- END LOCAL -->
 
     
-      <style>
-        a.gitment-editor-footer-tip { display: none; }
-        .gitment-container.gitment-footer-container { display: none; }
-      </style>
-    
 
     
       <script type="text/javascript">
@@ -900,7 +895,7 @@ public class WordCountDriver {
         owner: 'JaKeSu# MUST HAVE, Your Github ID',
         repo: 'comment',
         
-        lang: "auto# Force language, or auto switch by theme" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+        lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
         
         oauth: {
         
@@ -913,11 +908,7 @@ public class WordCountDriver {
 }
 
       
-      function showGitment(){
-        document.getElementById("gitment-display-button").style.display = "none";
-        document.getElementById("gitment-container").style.display = "block";
-        renderGitment();
-      }
+      renderGitment();
       
       </script>
     
