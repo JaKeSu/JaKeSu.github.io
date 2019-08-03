@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hadoop,mapreduce,大数据,hive,">
+  <meta name="keywords" content="PAT,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /">
-<meta name="keywords" content="hadoop,mapreduce,大数据,hive">
+<meta name="description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
+<meta name="keywords" content="PAT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Day9">
-<meta property="og:url" content="http://yoursite.com/2019/07/16/Day9/index.html">
+<meta property="og:title" content="A1002 A+B for Polynomials (25 分)">
+<meta property="og:url" content="http://yoursite.com/2019/08/03/A1002-A-B-for-Polynomials-25-分/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /">
+<meta property="og:description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-16T10:59:11.505Z">
+<meta property="og:updated_time" content="2019-08-03T08:55:24.275Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Day9">
-<meta name="twitter:description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /">
+<meta name="twitter:title" content="A1002 A+B for Polynomials (25 分)">
+<meta name="twitter:description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/16/Day9/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/03/A1002-A-B-for-Polynomials-25-分/">
 
 
 
 
 
-  <title>Day9 | 十元</title>
+  <title>A1002 A+B for Polynomials (25 分) | 十元</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Day9/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/03/A1002-A-B-for-Polynomials-25-分/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="三无的十元">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Day9</h1>
+          <h1 class="post-title" itemprop="name headline">A1002 A+B for Polynomials (25 分)</h1>
         
 
         <div class="post-meta">
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-16T17:46:00+08:00">
-                2019-07-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-03T16:38:00+08:00">
+                2019-08-03
               </time>
             
 
@@ -320,8 +320,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据/" itemprop="url" rel="index">
-                    <span itemprop="name">大数据</span>
+                  <a href="/categories/PAT甲级真题/" itemprop="url" rel="index">
+                    <span itemprop="name">PAT甲级真题</span>
                   </a>
                 </span>
 
@@ -351,7 +351,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  827
+                  505
                 </span>
               
 
@@ -367,7 +367,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  2
                 </span>
               
             </div>
@@ -388,158 +388,47 @@
       
 
       
-        <p>对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析<br>上传招聘数据到分布式文件系统<br> <code>hdfs dfs –put /opt/zl0507.csv  /</code><br> <a id="more"></a><br>在eclipse中新建package，重命名为<strong>com.sj.clean</strong><br>其中新建类 <strong>CleanMapper.java</strong></p>
-<pre><code>package com.sj.clean;
-
-import java.io.IOException;
-
-import org.apache.hadoop.classification.InterfaceAudience.Private;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Mapper;
-
-public class CleanMapper extends Mapper&lt;LongWritable,Text,NullWritable,Text&gt;{
-    @Override
-    protected void map(LongWritable key, Text value, Mapper&lt;LongWritable, Text, NullWritable, Text&gt;.Context context)
-            throws IOException, InterruptedException {
-        //将第一行过滤掉,第一行偏移量为0
-        if(!key.toString().equals(&quot;0&quot;)){
-            String[] arr=value.toString().split(&quot;,&quot;);
-            //用于一行数据，分割成7个字符串的数组
-            String[] cacheString=new String[7];
-            //存储第七个字段由于数据量太大，可能出现英文逗号（分隔符），从而产生错误，所以加了一个cachestring来进行拼接
-            StringBuffer stringBuffer =new StringBuffer();
-            for (int i=0;i&lt;arr.length;i++){
-                if(i&lt;6){
-                    cacheString[i]=arr[i];
-
-                }else if(i&gt;=6){
-                    stringBuffer.append(arr[i]);
-                }
-            }
-            cacheString[6]=stringBuffer.toString();
-            if(check(cacheString)){
-                String data=String.join(&quot;|&quot;,cacheString);
-                context.write(NullWritable.get(), new Text(data));
-            }
-        }
-        // TODO Auto-generated method stub
-
+        <h3 id="1002-A-B-for-Polynomials-25-分"><a href="#1002-A-B-for-Polynomials-25-分" class="headerlink" title="1002 A+B for Polynomials (25 分)"></a>1002 A+B for Polynomials (25 分)</h3><p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
+<p>Input Specification:<br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:</p>
+<p>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub>  </p>
+<p>where <code>K</code> is the number of nonzero terms in the polynomial, N<sub>i</sub> and aN<sub>i</sub> (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤N<sub>K</sub> &lt;⋯&lt; N<sub>2</sub>&lt; N<sub>1</sub> ≤1000.</p>
+<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
+<h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h4><pre><code>2 1 2.4 0 3.2
+2 2 1.5 1 0.5</code></pre><h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h4><pre><code>3 2 1.5 1 2.9 0 3.2</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>题目的意思，大概就是给你两个多项式，让你计算他们的和。<br>每一个输入样例包含两行，每一行为一个多项式，格式是：<br>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub><br>这样子的。<br>其中k为非零项的项数，然后k组数据，每一组包含一个N<sub>K</sub> 和一个      aN<sub>K</sub>  ，前者为幂，后者为系数。<br>输出也是这个格式。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>用两个数组分别保存两个多项式，其中数组下标作为幂，数组值作为系数，遍历两个数组，对应下标相加，结果保存在a数组中，最后对于其中系数不为0的项进行输出即可。0.0</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;iostream&gt;
+using namespace std;
+const int maxn = 1001;
+double a[maxn], b[maxn];//定义两个多项式数组，用数组下标保存幂，数组值保存系数
+int k;
+void read(double a[])//读入多项式
+{
+    scanf(&quot;%d&quot;, &amp;k);
+    for (int i = 0; i &lt; k; i++)
+    {
+        int exp;
+        double coef;
+        scanf(&quot;%d%lf&quot;, &amp;exp, &amp;coef);
+        a[exp] = coef;
     }
-    private boolean check(String [] arr){
-        for(String string : arr){
-            if(string.trim().equals(&quot;&quot;)){
-                return false;
-            }
-        }
-        return true;
+}
+int main()
+{
+    read(a);
+    read(b);
+    int cnt = 0;
+    for (int i = 0; i &lt; maxn; i++)//进行两个多项式相加的运算，结果保存到a数组
+    {
+        a[i] += b[i];
+        if (a[i])cnt++;//记录非零项项数
     }
-
-}</code></pre><p>新建类 <strong>CleanReducer.java</strong></p>
-<pre><code>package com.sj.clean;
-
-import java.io.IOException;
-import java.util.Iterator;
-
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Reducer;
-
-public class CleanReducer extends Reducer&lt;NullWritable, Text, NullWritable, Text&gt;{
-    @Override
-    protected void reduce(NullWritable arg0, Iterable&lt;Text&gt; values,
-            Reducer&lt;NullWritable, Text, NullWritable, Text&gt;.Context context) throws IOException, InterruptedException {
-        // TODO Auto-generated method stub
-        for(Text text:values){
-            String [] datalist=text.toString().split(&quot;\\|&quot;);
-            if(datalist.length==7){
-                String data=String.join(&quot;|&quot;, datalist);
-                context.write(NullWritable.get(),new Text(data));
-            }
-        }
+    printf(&quot;%d&quot;, cnt);
+    for (int i = maxn; i &gt;= 0; i--)
+    {
+        if (a[i])printf(&quot; %d %.1f&quot;, i, a[i]);
     }
-}</code></pre><p>新建类 <strong>Main.java</strong></p>
-<pre><code>package com.sj.clean;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-
-public class Main {
-    public static void main(String[] args) throws Exception{
-        Configuration configuration=new Configuration();
-        Job job=Job.getInstance(configuration);
-        job.setJarByClass(Main.class);
-        job.setMapperClass(CleanMapper.class);
-        job.setMapOutputKeyClass(NullWritable.class);
-        job.setMapOutputValueClass(Text.class);
-        job.setReducerClass(CleanReducer.class);
-        job.setOutputKeyClass(NullWritable.class);
-        job.setOutputValueClass(NullWritable.class);
-        FileInputFormat.setInputPaths(job, new Path(&quot;hdfs://192.168.245.132:9000/zl0507.csv&quot;));
-        FileOutputFormat.setOutputPath(job,new Path(&quot;hdfs://192.168.245.132:9000/clean&quot;));
-        Boolean res=job.waitForCompletion(true);
-        System.exit(res?0:-1);
-
-
-    }
-
-}</code></pre><p>运行Main.java，在分布式文件系统/clean/ 中生成文件  </p>
-<p>利用hive进行词频统计：<br>常用命令： </p>
-<pre><code>create database if not exists hive;
-show databases;
-show databases like &apos;h.*&apos;;
-use hive;
-show tables;</code></pre><p>  <code>create table if not exists hive.userr(name string comment&#39;username&#39;,pwd string comment &#39;password&#39;, address struct&lt;street:string,city:string,state:string,zip:int&gt;,identify map&lt;int,tinyint&gt; comment&#39;number,sex&#39;);</code></p>
-<p>统计：<br>master：<br><code>cd /opt</code><br><code>vi wc.txt</code><br>写入： </p>
-<pre><code>hongyutang love qiaoshuang
-xiaoyu is running
-china is great country
-beijing is the capital of china</code></pre><p>启动hive  </p>
-<pre><code>create table wc(txt String) row format delimited fields terminated by &apos;\t&apos;;
-load data local inpath &apos;/opt/wc.txt&apos; overwrite into table wc;
-select * from wc;
-
-select split(txt,&apos; &apos;) from wc;</code></pre><p>结果：  </p>
-<pre><code>[&quot;hongyutang&quot;,&quot;love&quot;,&quot;qiaoshuang&quot;]
-[&quot;xiaoyu&quot;,&quot;is&quot;,&quot;running&quot;]
-[&quot;china&quot;,&quot;is&quot;,&quot;great&quot;,&quot;country&quot;]
-[&quot;beijing&quot;,&quot;is&quot;,&quot;the&quot;,&quot;capital&quot;,&quot;of&quot;,&quot;china&quot;]</code></pre><p><code>select explode(split(txt,&#39; &#39;)) from wc;</code><br>结果  </p>
-<pre><code>hongyutang
-love
-qiaoshuang
-xiaoyu
-is
-running
-china
-is
-great
-country
-beijing
-is
-the
-capital
-of
-china</code></pre><p><code>select t1.word,count(t1.word) from (select explode(split(txt ,&#39; &#39;)) word from wc)t1 group by t1.word;</code>  </p>
-<pre><code>beijing 1
-capital 1
-china   2
-country 1
-great   1
-hongyutang      1
-is      3
-love    1
-of      1
-qiaoshuang      1
-running 1
-the     1
-xiaoyu  1</code></pre>
+    return 0;
+}</code></pre>
       
     </div>
     
@@ -561,13 +450,7 @@ xiaoyu  1</code></pre>
       
         <div class="post-tags">
           
-            <a href="/tags/hadoop/" rel="tag"><i class="fa fa-tag"></i> hadoop</a>
-          
-            <a href="/tags/mapreduce/" rel="tag"><i class="fa fa-tag"></i> mapreduce</a>
-          
-            <a href="/tags/大数据/" rel="tag"><i class="fa fa-tag"></i> 大数据</a>
-          
-            <a href="/tags/hive/" rel="tag"><i class="fa fa-tag"></i> hive</a>
+            <a href="/tags/PAT/" rel="tag"><i class="fa fa-tag"></i> PAT</a>
           
         </div>
       
@@ -580,8 +463,8 @@ xiaoyu  1</code></pre>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/15/Day8/" rel="next" title="Day8">
-                <i class="fa fa-chevron-left"></i> Day8
+              <a href="/2019/08/02/A1001-A-B-Format-20-分/" rel="next" title="A1001 A+B Format (20 分)">
+                <i class="fa fa-chevron-left"></i> A1001 A+B Format (20 分)
               </a>
             
           </div>
@@ -590,8 +473,8 @@ xiaoyu  1</code></pre>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/16/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/" rel="prev" title="A1043 Is It a Binary Search Tree (25 分)">
+                A1043 Is It a Binary Search Tree (25 分) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -644,8 +527,17 @@ xiaoyu  1</code></pre>
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -737,6 +629,22 @@ xiaoyu  1</code></pre>
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1002-A-B-for-Polynomials-25-分"><span class="nav-number">1.</span> <span class="nav-text">1002 A+B for Polynomials (25 分)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Output-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">Output Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Input"><span class="nav-number">1.2.</span> <span class="nav-text">Sample Input:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Output"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Output:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题意"><span class="nav-number">1.4.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.5.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.6.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hadoop,mapreduce,大数据,hive,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,18 +79,13 @@
 
 
 
-<meta name="description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /">
-<meta name="keywords" content="hadoop,mapreduce,大数据,hive">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Day9">
-<meta property="og:url" content="http://yoursite.com/2019/07/16/Day9/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="十元">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-16T10:59:11.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Day9">
-<meta name="twitter:description" content="对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析上传招聘数据到分布式文件系统 hdfs dfs –put /opt/zl0507.csv  /">
+<meta name="twitter:title" content="十元">
 
 
 
@@ -120,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/16/Day9/">
+  <link rel="canonical" href="http://yoursite.com/page/3/">
 
 
 
 
 
-  <title>Day9 | 十元</title>
+  <title>十元</title>
   
 
 
@@ -150,7 +145,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,9 +249,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -268,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Day9/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/Day1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="三无的十元">
@@ -285,7 +281,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Day9</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/10/Day1/" itemprop="url">Day1</a></h1>
         
 
         <div class="post-meta">
@@ -297,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-16T17:46:00+08:00">
-                2019-07-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T22:12:00+08:00">
+                2019-07-10
               </time>
             
 
@@ -351,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  827
+                  446
                 </span>
               
 
@@ -367,7 +365,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  1
                 </span>
               
             </div>
@@ -388,167 +386,76 @@
       
 
       
-        <p>对之前爬虫爬到的智联招聘的数据进行mapreduce处理，再进行数据分析<br>上传招聘数据到分布式文件系统<br> <code>hdfs dfs –put /opt/zl0507.csv  /</code><br> <a id="more"></a><br>在eclipse中新建package，重命名为<strong>com.sj.clean</strong><br>其中新建类 <strong>CleanMapper.java</strong></p>
-<pre><code>package com.sj.clean;
-
-import java.io.IOException;
-
-import org.apache.hadoop.classification.InterfaceAudience.Private;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Mapper;
-
-public class CleanMapper extends Mapper&lt;LongWritable,Text,NullWritable,Text&gt;{
-    @Override
-    protected void map(LongWritable key, Text value, Mapper&lt;LongWritable, Text, NullWritable, Text&gt;.Context context)
-            throws IOException, InterruptedException {
-        //将第一行过滤掉,第一行偏移量为0
-        if(!key.toString().equals(&quot;0&quot;)){
-            String[] arr=value.toString().split(&quot;,&quot;);
-            //用于一行数据，分割成7个字符串的数组
-            String[] cacheString=new String[7];
-            //存储第七个字段由于数据量太大，可能出现英文逗号（分隔符），从而产生错误，所以加了一个cachestring来进行拼接
-            StringBuffer stringBuffer =new StringBuffer();
-            for (int i=0;i&lt;arr.length;i++){
-                if(i&lt;6){
-                    cacheString[i]=arr[i];
-
-                }else if(i&gt;=6){
-                    stringBuffer.append(arr[i]);
-                }
-            }
-            cacheString[6]=stringBuffer.toString();
-            if(check(cacheString)){
-                String data=String.join(&quot;|&quot;,cacheString);
-                context.write(NullWritable.get(), new Text(data));
-            }
-        }
-        // TODO Auto-generated method stub
-
-    }
-    private boolean check(String [] arr){
-        for(String string : arr){
-            if(string.trim().equals(&quot;&quot;)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-}</code></pre><p>新建类 <strong>CleanReducer.java</strong></p>
-<pre><code>package com.sj.clean;
-
-import java.io.IOException;
-import java.util.Iterator;
-
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Reducer;
-
-public class CleanReducer extends Reducer&lt;NullWritable, Text, NullWritable, Text&gt;{
-    @Override
-    protected void reduce(NullWritable arg0, Iterable&lt;Text&gt; values,
-            Reducer&lt;NullWritable, Text, NullWritable, Text&gt;.Context context) throws IOException, InterruptedException {
-        // TODO Auto-generated method stub
-        for(Text text:values){
-            String [] datalist=text.toString().split(&quot;\\|&quot;);
-            if(datalist.length==7){
-                String data=String.join(&quot;|&quot;, datalist);
-                context.write(NullWritable.get(),new Text(data));
-            }
-        }
-    }
-}</code></pre><p>新建类 <strong>Main.java</strong></p>
-<pre><code>package com.sj.clean;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-
-public class Main {
-    public static void main(String[] args) throws Exception{
-        Configuration configuration=new Configuration();
-        Job job=Job.getInstance(configuration);
-        job.setJarByClass(Main.class);
-        job.setMapperClass(CleanMapper.class);
-        job.setMapOutputKeyClass(NullWritable.class);
-        job.setMapOutputValueClass(Text.class);
-        job.setReducerClass(CleanReducer.class);
-        job.setOutputKeyClass(NullWritable.class);
-        job.setOutputValueClass(NullWritable.class);
-        FileInputFormat.setInputPaths(job, new Path(&quot;hdfs://192.168.245.132:9000/zl0507.csv&quot;));
-        FileOutputFormat.setOutputPath(job,new Path(&quot;hdfs://192.168.245.132:9000/clean&quot;));
-        Boolean res=job.waitForCompletion(true);
-        System.exit(res?0:-1);
-
-
-    }
-
-}</code></pre><p>运行Main.java，在分布式文件系统/clean/ 中生成文件  </p>
-<p>利用hive进行词频统计：<br>常用命令： </p>
-<pre><code>create database if not exists hive;
-show databases;
-show databases like &apos;h.*&apos;;
-use hive;
-show tables;</code></pre><p>  <code>create table if not exists hive.userr(name string comment&#39;username&#39;,pwd string comment &#39;password&#39;, address struct&lt;street:string,city:string,state:string,zip:int&gt;,identify map&lt;int,tinyint&gt; comment&#39;number,sex&#39;);</code></p>
-<p>统计：<br>master：<br><code>cd /opt</code><br><code>vi wc.txt</code><br>写入： </p>
-<pre><code>hongyutang love qiaoshuang
-xiaoyu is running
-china is great country
-beijing is the capital of china</code></pre><p>启动hive  </p>
-<pre><code>create table wc(txt String) row format delimited fields terminated by &apos;\t&apos;;
-load data local inpath &apos;/opt/wc.txt&apos; overwrite into table wc;
-select * from wc;
-
-select split(txt,&apos; &apos;) from wc;</code></pre><p>结果：  </p>
-<pre><code>[&quot;hongyutang&quot;,&quot;love&quot;,&quot;qiaoshuang&quot;]
-[&quot;xiaoyu&quot;,&quot;is&quot;,&quot;running&quot;]
-[&quot;china&quot;,&quot;is&quot;,&quot;great&quot;,&quot;country&quot;]
-[&quot;beijing&quot;,&quot;is&quot;,&quot;the&quot;,&quot;capital&quot;,&quot;of&quot;,&quot;china&quot;]</code></pre><p><code>select explode(split(txt,&#39; &#39;)) from wc;</code><br>结果  </p>
-<pre><code>hongyutang
-love
-qiaoshuang
-xiaoyu
-is
-running
-china
-is
-great
-country
-beijing
-is
-the
-capital
-of
-china</code></pre><p><code>select t1.word,count(t1.word) from (select explode(split(txt ,&#39; &#39;)) word from wc)t1 group by t1.word;</code>  </p>
-<pre><code>beijing 1
-capital 1
-china   2
-country 1
-great   1
-hongyutang      1
-is      3
-love    1
-of      1
-qiaoshuang      1
-running 1
-the     1
-xiaoyu  1</code></pre>
+        
+          <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>安装VMware，并安装Centos，选择无界面安装</p>
+<h2 id="Linux基本知识"><a href="#Linux基本知识" class="headerlink" title="Linux基本知识"></a>Linux基本知识</h2><h3 id="Linux-目录结构"><a href="#Linux-目录结构" class="headerlink" title="Linux 目录结构"></a>Linux 目录结构</h3><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/</td>
+<td>Linux系统的根目录，一般只存放目录</td>
+</tr>
+<tr>
+<td>/bin和/usr/bin</td>
+<td>命令（二进制）文件目录，包含可供root用户和普通用户所使用的Linux命令和二进制文件，包含shell解析器等</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>系统引导和内核目录，存放引导装载文件</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>设备目录，存放各个硬件设备的信息，例如光驱、硬盘等</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>系统级别的配置文件存放的目录，一般由配置管理员来使用</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>所有普通用户的家目录</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>给主机额外安装软件所摆放的目录</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>root用户的的根目录</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>存放应用程序产生的临时数据不能在此目录下存放重要数据</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>系统一般运行时需要改变的数据</td>
+</tr>
+<tr>
+<td>/usr</td>
+<td>应用程序相关目录命令、函数库、共享包、内核源码</td>
+</tr>
+<tr>
+<td>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/10/Day1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </td></tr></tbody></table></div>
     
     
     
 
 	<div>
-      
-        
       
 </div>
     
@@ -559,46 +466,14 @@ xiaoyu  1</code></pre>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/hadoop/" rel="tag"><i class="fa fa-tag"></i> hadoop</a>
-          
-            <a href="/tags/mapreduce/" rel="tag"><i class="fa fa-tag"></i> mapreduce</a>
-          
-            <a href="/tags/大数据/" rel="tag"><i class="fa fa-tag"></i> 大数据</a>
-          
-            <a href="/tags/hive/" rel="tag"><i class="fa fa-tag"></i> hive</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/07/15/Day8/" rel="next" title="Day8">
-                <i class="fa fa-chevron-left"></i> Day8
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/16/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -608,11 +483,172 @@ xiaoyu  1</code></pre>
   </article>
 
 
+    
+      
 
-    <div class="post-spread">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/我的第一篇博客文章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三无的十元">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/satomi.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="十元">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/07/我的第一篇博客文章/" itemprop="url">我的第一篇博客文章</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-07T21:05:00+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  156
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h1><img src="http://img0.imgtn.bdimg.com/it/u=15801058,3451839302&fm=26&gp=0.jpg" width="100" height="100" div align="right">
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/07/我的第一篇博客文章/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
+    
+    
+    
+
+	<div>
+      
+</div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
 
           </div>
@@ -620,10 +656,6 @@ xiaoyu  1</code></pre>
 
 
           
-
-  
-
-
 
         </div>
         
@@ -877,10 +909,6 @@ xiaoyu  1</code></pre>
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
