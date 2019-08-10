@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
+<meta name="description" content="1003 Emergency (25 分)As an emergency rescue team leader of a city, you are given a special map of your country. The map shows several scattered cities connected by some roads. Amount of rescue teams i">
 <meta name="keywords" content="PAT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A1002 A+B for Polynomials (25 分)">
-<meta property="og:url" content="http://yoursite.com/2019/08/03/A1002-A-B-for-Polynomials-25-分/index.html">
+<meta property="og:title" content="A1003 Emergency (25 分)">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/A1003-Emergency-25-分/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
+<meta property="og:description" content="1003 Emergency (25 分)As an emergency rescue team leader of a city, you are given a special map of your country. The map shows several scattered cities connected by some roads. Amount of rescue teams i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T10:00:32.362Z">
+<meta property="og:updated_time" content="2019-08-10T13:39:18.741Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A1002 A+B for Polynomials (25 分)">
-<meta name="twitter:description" content="1002 A+B for Polynomials (25 分)This time, you are supposed to find A+B where A and B are two polynomials. Input Specification:Each input file contains one test case. Each case occupies 2 lines, and ea">
+<meta name="twitter:title" content="A1003 Emergency (25 分)">
+<meta name="twitter:description" content="1003 Emergency (25 分)As an emergency rescue team leader of a city, you are given a special map of your country. The map shows several scattered cities connected by some roads. Amount of rescue teams i">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/03/A1002-A-B-for-Polynomials-25-分/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/A1003-Emergency-25-分/">
 
 
 
 
 
-  <title>A1002 A+B for Polynomials (25 分) | 十元</title>
+  <title>A1003 Emergency (25 分) | 十元</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/03/A1002-A-B-for-Polynomials-25-分/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/A1003-Emergency-25-分/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="三无的十元">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">A1002 A+B for Polynomials (25 分)</h1>
+          <h1 class="post-title" itemprop="name headline">A1003 Emergency (25 分)</h1>
         
 
         <div class="post-meta">
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-03T16:38:00+08:00">
-                2019-08-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-10T20:53:00+08:00">
+                2019-08-10
               </time>
             
 
@@ -351,7 +351,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  505
+                  2.3k
                 </span>
               
 
@@ -367,7 +367,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  11
                 </span>
               
             </div>
@@ -388,46 +388,222 @@
       
 
       
-        <h3 id="1002-A-B-for-Polynomials-25-分"><a href="#1002-A-B-for-Polynomials-25-分" class="headerlink" title="1002 A+B for Polynomials (25 分)"></a>1002 A+B for Polynomials (25 分)</h3><p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
-<p>Input Specification:<br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:</p>
+        <h3 id="1003-Emergency-25-分"><a href="#1003-Emergency-25-分" class="headerlink" title="1003 Emergency (25 分)"></a>1003 Emergency (25 分)</h3><p>As an emergency rescue team leader of a city, you are given a special map of your country. The map shows several scattered cities connected by some roads. Amount of rescue teams in each city and the length of each road between any pair of cities are marked on the map. When there is an emergency call to you from some other city, your job is to lead your men to the place as quickly as possible, and at the mean time, call up as many hands on the way as possible.</p>
 <a id="more"></a>
-<p>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub>  </p>
-<p>where <code>K</code> is the number of nonzero terms in the polynomial, N<sub>i</sub> and aN<sub>i</sub> (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤N<sub>K</sub> &lt;⋯&lt; N<sub>2</sub>&lt; N<sub>1</sub> ≤1000.</p>
-<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
-<h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h4><pre><code>2 1 2.4 0 3.2
-2 2 1.5 1 0.5</code></pre><h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h4><pre><code>3 2 1.5 1 2.9 0 3.2</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>题目的意思，大概就是给你两个多项式，让你计算他们的和。<br>每一个输入样例包含两行，每一行为一个多项式，格式是：<br>K N<sub>1</sub> aN<sub>1</sub> N<sub>2</sub> aN<sub>2</sub>  … N<sub>K</sub>         aN<sub>K</sub><br>这样子的。<br>其中k为非零项的项数，然后k组数据，每一组包含一个N<sub>K</sub> 和一个      aN<sub>K</sub>  ，前者为幂，后者为系数。<br>输出也是这个格式。</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>用两个数组分别保存两个多项式，其中数组下标作为幂，数组值作为系数，遍历两个数组，对应下标相加，结果保存在a数组中，最后对于其中系数不为0的项进行输出即可。0.0</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;iostream&gt;
+<h4 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h4><p>Each input file contains one test case. For each test case, the first line contains <code>4</code> positive integers: <code>N</code> (≤500) - the number of cities (and the cities are numbered from<code>0</code>to <code>N−1</code>), <code>M</code>- the number of roads, C<sub>1</sub>  and C<sub>2</sub>  - the cities that you are currently in and that you must save, respectively. The next line contains <code>N</code> integers, where the i-th integer is the number of rescue teams in the i-th city. Then <code>M</code> lines follow, each describes a road with three integers c<sub>1</sub> , c<sub>2</sub> and <code>L</code>, which are the pair of cities connected by a road and the length of that road, respectively. It is guaranteed that there exists at least one path from C<sub>1</sub>  to C<sub>2</sub>.</p>
+<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case, print in one line two numbers: the number of different shortest paths between C<sub>1</sub>  and C<sub>2</sub> , and the maximum amount of rescue teams you can possibly gather. All the numbers in a line must be separated by exactly one space, and there is no extra space allowed at the end of a line.</p>
+<h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h4><pre><code>5 6 0 2
+1 2 1 5 3
+0 1 1
+0 2 2
+0 3 1
+1 2 1
+2 4 1
+3 4 1</code></pre><h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h4><pre><code>2 4</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>你作为一个城市的救援队领导者，知道不同城市的连接线路的长度，每个城市的救援队个数，现在让你前往目的地，要求路程最短。<br>输入格式：每个样例，第一行有4个正数，N代表城市的个数，M代表路径条数，c<sub>1</sub> , c<sub>2</sub>表示你当前的城市以及目的城市的标号。<br>接下来的一行包含N个数字，为每个城市的救援队个数。然后的M行，每一行有三个数，c<sub>1</sub> , c<sub>2</sub> 和<code>L</code>，分别为两个城市的标号以及距离。<br>输出格式：每个测试样例打印两个数字，最短路径的条数和你能够调动的救援队的最大值，也就是最大边权。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>主要思路还是dijkstra算法。由于要打印最短路径条数，用一个num[1]表示节点i到s的最短路径条数，我们在每次通过点v到i找到另外一条最短路径的时候，都通过num[v]更新这个num[i]。而在最短路径相同时，我们要输出点权最大的，于是也用一个w[i]来表示i的最大点权，和num[i]一样，每次找到相同的最短路径时，我们进行比较，如果点权更大则更新。<br>具体的在代码注释里面写得比较详细。<br>采用三种方案，进行求解。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>1.Dijkstra</p>
+<pre><code>#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
 using namespace std;
-const int maxn = 1001;
-double a[maxn], b[maxn];//定义两个多项式数组，用数组下标保存幂，数组值保存系数
-int k;
-void read(double a[])//读入多项式
-{
-    scanf(&quot;%d&quot;, &amp;k);
-    for (int i = 0; i &lt; k; i++)
-    {
-        int exp;
-        double coef;
-        scanf(&quot;%d%lf&quot;, &amp;exp, &amp;coef);
-        a[exp] = coef;
+const int MAXV=510;//最大定点数
+const int INF=1000000000;//不可达
+
+int G[MAXV][MAXV],d[MAXV],n,w[MAXV],num[MAXV],weight[MAXV],m,s,e;
+//定义图G   d数组用于存储最短路径  num数组存储最短路径条数  weight数组存储点权 
+bool vis[MAXV]={false};//判断是否已经访问过的顶点
+void Dijkstra(int s){
+    fill(d,d+MAXV,INF);//初始化最短路径均为无穷大
+    memset(num,0,sizeof(num));
+    memset(w,0,sizeof(w));//w存储最优的救援队个数
+    w[s]=weight[s];//初始化s点的w即为本身的救援队个数，最短路径初始化为一条，s点的最短路径为0
+    num[s]=1;
+    d[s]=0;
+    for(int i=0;i&lt;n;i++){
+        int u=-1,MIN=INF;//找出一个点u未被访问，并且距离s点最短
+        for(int j=0;j&lt;n;j++){
+            if(vis[j]==false&amp;&amp;d[j]&lt;MIN){
+                u=j;
+                MIN=d[j];
+            }
+        }
+        if(u==-1)return ;
+        vis[u]=true;//设置点u已经被访问
+        for(int v=0;v&lt;n;v++){
+            if(vis[v]==false&amp;&amp;G[u][v]!=INF){//寻找点u附近的可达点，并且没有访问过的点v
+                if(d[u]+G[u][v]&lt;d[v]){//如果通过点u可以使得v到s的距离更短，那么优化他
+                    d[v]=d[u]+G[u][v];
+                    w[v]=w[u]+weight[v];//因为第一次找到最短路径，那么我们将这个点的最优点权更新
+                    num[v]=num[u];//v点继承u的最短路径条数，因为u到s有多少条最短路径，那我v经过u到s也应该有这么多条
+                }else if(d[u]+G[u][v]==d[v]){//在出现两个最短路径的时候，判断如果这条路可以使得点权w更大（也就是救援队人数增多）我们就更新点权
+                    if(w[u]+weight[v]&gt;w[v]){
+                        w[v]=w[u]+weight[v];
+                    }
+                    num[v]+=num[u];//此时由于出现了多条最短路径，所以我们应该让v本来的条数加上u的条数
+                }
+            }
+        }
+    }
+
+}
+int main(){
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;s,&amp;e);
+    for(int i=0;i&lt;n;i++){
+        scanf(&quot;%d&quot;,&amp;weight[i]);
+    }
+    int u,v;
+    fill(G[0],G[0]+MAXV*MAXV,INF);
+    for(int i=0;i&lt;m;i++){
+        scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
+        scanf(&quot;%d&quot;,&amp;G[u][v]);
+        G[v][u]=G[u][v];
+    }
+    Dijkstra(s);
+    printf(&quot;%d %d\n&quot;,num[e],w[e]);
+    return 0;
+}</code></pre><p>2.Dijkstra+DFS</p>
+<pre><code>#include&lt;cstdio&gt;
+#include&lt;vector&gt;
+using namespace std;
+const int INF=1000000000;
+const int MAXV=510;
+int n,m,G[MAXV][MAXV],d[MAXV],s,e,weight[MAXV];
+bool vis[MAXV]={false};//判断是否访问过这个顶点
+vector&lt;int&gt;pre[MAXV];//用一个数组保存当前顶点在路径中的前驱节点
+void Dijkstra(int s){
+    fill(d,d+MAXV,INF);
+    d[s]=0;//初始化最短距离为0
+    for(int i=0;i&lt;n;i++){
+        int u=-1,MIN=INF;
+        for(int j=0;j&lt;n;j++){//找到距离当前节点可到达的最短距离的节点
+            if(vis[j]==false&amp;&amp;d[j]&lt;MIN){
+                u=j;
+                MIN=d[j];
+            }
+        }
+        if(u==-1)return;
+        vis[u]=true;//设置这个节点为已经访问过
+        for(int v=0;v&lt;n;v++){//以这个节点为中介，更新所有的最短路径，并且更新前驱节点
+            if(vis[v]==false&amp;&amp;G[u][v]!=INF){
+                if(d[u]+G[u][v]&lt;d[v]){//如果找到最优点，清除之前此顶点的前驱节点，并加入新的前驱节点
+                    d[v]=d[u]+G[u][v];
+                    pre[v].clear();
+                    pre[v].push_back(u);
+                }else if(d[u]+G[u][v]==d[v]){//如果新最优点的最短路径和之前最短距离相等，则将这个新的前驱节点加入进pre数组
+                    pre[v].push_back(u);//（这里不用清空，因为是并列关系），说明他们都是符合题意的路径节点
+                }
+            }
+        }
     }
 }
-int main()
-{
-    read(a);
-    read(b);
-    int cnt = 0;
-    for (int i = 0; i &lt; maxn; i++)//进行两个多项式相加的运算，结果保存到a数组
-    {
-        a[i] += b[i];
-        if (a[i])cnt++;//记录非零项项数
+int optValue=0,num=0;//定义一个最优值和存储最优路径的数目
+vector&lt;int&gt; path,tempPath;
+void DFS(int v){
+    if(v==s){
+        num++;//最优路径数目在每次DFS到叶子节点时+1
+        tempPath.push_back(v);
+        // int value1=0;
+        // for(int i=tempPath.size()-1;i&gt;0;i--){
+        //     int id=tempPath[i],idNext=tempPath[i-1];
+        //     value1+=G[id][idNext];
+        // }
+        int value2=0;
+        for(int i=tempPath.size()-1;i&gt;=0;i--){//这里value为计算当前路径的点权，也就是救援队个数
+            int id=tempPath[i];
+            value2+=weight[id];
+        }
+        if(value2&gt;optValue){//每条路径都要计算他的value，和最优的value进行对比
+            optValue=value2;
+            path=tempPath;//存储最优路径
+        }
+        tempPath.pop_back();//删除加入节点，防止污染下一条路径
+        return ;
     }
-    printf(&quot;%d&quot;, cnt);
-    for (int i = maxn; i &gt;= 0; i--)
-    {
-        if (a[i])printf(&quot; %d %.1f&quot;, i, a[i]);
+    tempPath.push_back(v);
+    for(int i=0;i&lt;pre[v].size();i++){//对前驱节点数组进行遍历，找到所有的路径
+        DFS(pre[v][i]);
     }
+    tempPath.pop_back();
+}
+int main(){
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;s,&amp;e);
+    for(int i=0;i&lt;n;i++){
+        scanf(&quot;%d&quot;,&amp;weight[i]);//输入点权，即救援队个数
+    }
+    int v,u;
+    fill(G[0],G[0]+MAXV*MAXV,INF);//初始化图边权
+    for(int i=0;i&lt;m;i++){//输入边权，即两个城市之间距离
+        scanf(&quot;%d%d&quot;,&amp;v,&amp;u);
+        scanf(&quot;%d&quot;,&amp;G[v][u]);
+        G[u][v]=G[v][u];
+    }
+    Dijkstra(s);//从起点形成所有的最短距离
+    DFS(e);//从终点递归找到最优值
+    printf(&quot;%d %d\n&quot;,num,optValue);
+    return 0;
+}</code></pre><p>3.Bellman-Ford</p>
+<pre><code>#include&lt;cstdio&gt;
+#include&lt;vector&gt;
+#include&lt;set&gt;
+#include&lt;cstring&gt;
+using namespace std;
+const int MAXV=510;
+const int INF=1000000000;
+struct Node{
+    int v,dis;
+    Node(int _v,int _dis):v(_v),dis(_dis){}
+};
+vector&lt;Node&gt; Adj[MAXV];
+int n,m,s,e,weight[MAXV],d[MAXV],w[MAXV],num[MAXV];
+set&lt;int&gt;pre[MAXV];
+void Bellman(int s){
+    fill(d,d+MAXV,INF);
+    memset(w,0,sizeof(w));
+    memset(num,0,sizeof(num));
+    d[s]=0;
+    w[s]=weight[s];
+    num[s]=1;
+    for(int i=0;i&lt;n-1;i++){
+        for(int u=0;u&lt;n;u++){
+            for(int j=0;j&lt;Adj[u].size();j++){
+                int v=Adj[u][j].v;
+                int dis=Adj[u][j].dis;
+                if(d[u]+dis&lt;d[v]){
+                    d[v]=d[u]+dis;
+                    w[v]=w[u]+weight[v];
+                    num[v]=num[u];
+                    pre[v].clear();
+                    pre[v].insert(u);
+
+                }else if(d[u]+dis==d[v]){
+                    if(w[u]+weight[v]&gt;w[v]){
+                        w[v]=w[u]+weight[v];
+                    }
+                    pre[v].insert(u);
+
+                    num[v]=0;
+                    set&lt;int&gt;::iterator it;
+                    for( it=pre[v].begin();it!=pre[v].end();it++){
+                        num[v]+=num[*it];
+                    }
+                }
+            }
+        }
+    }
+}
+int main(){
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;s,&amp;e);
+    for( int i=0;i&lt;n;i++){
+        scanf(&quot;%d&quot;,&amp;weight[i]);
+    }
+    int u,v,wt;
+    for(int i=0;i&lt;m;i++){
+        scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;wt);
+        Adj[u].push_back(Node(v,wt));
+        Adj[v].push_back(Node(u,wt));
+    }
+    Bellman(s);
+    printf(&quot;%d %d\n&quot;,num[e],w[e]);
     return 0;
 }</code></pre>
       
@@ -464,8 +640,8 @@ int main()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/02/A1001-A-B-Format-20-分/" rel="next" title="A1001 A+B Format (20 分)">
-                <i class="fa fa-chevron-left"></i> A1001 A+B Format (20 分)
+              <a href="/2019/08/04/A1075-PAT-Judge-25-分/" rel="next" title="A1075 PAT Judge (25 分)">
+                <i class="fa fa-chevron-left"></i> A1075 PAT Judge (25 分)
               </a>
             
           </div>
@@ -473,10 +649,6 @@ int main()
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/" rel="prev" title="A1043 Is It a Binary Search Tree (25 分)">
-                A1043 Is It a Binary Search Tree (25 分) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -642,7 +814,7 @@ int main()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1002-A-B-for-Polynomials-25-分"><span class="nav-number">1.</span> <span class="nav-text">1002 A+B for Polynomials (25 分)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Output-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">Output Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Input"><span class="nav-number">1.2.</span> <span class="nav-text">Sample Input:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Output"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Output:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题意"><span class="nav-number">1.4.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.5.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.6.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1003-Emergency-25-分"><span class="nav-number">1.</span> <span class="nav-text">1003 Emergency (25 分)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">Input Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output-Specification"><span class="nav-number">1.2.</span> <span class="nav-text">Output Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Input"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Input:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Output"><span class="nav-number">1.4.</span> <span class="nav-text">Sample Output:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题意"><span class="nav-number">1.5.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.6.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.7.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
             
 
           </div>
