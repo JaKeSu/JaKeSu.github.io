@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PAT,">
+  <meta name="keywords" content="进军PAT,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1075 PAT Judge (25 分)The ranklist of PAT is generated from the status list, which shows the scores of the submissions. This time you are supposed to generate the ranklist for PAT.">
-<meta name="keywords" content="PAT">
+<meta name="description" content="1057 Stack (30 分)Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top">
+<meta name="keywords" content="进军PAT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A1075 PAT Judge (25 分)">
-<meta property="og:url" content="http://yoursite.com/2019/08/04/A1075-PAT-Judge-25-分/index.html">
+<meta property="og:title" content="A1057 Stack (30 分)">
+<meta property="og:url" content="http://yoursite.com/2019/08/18/1057-Stack-30-分/index.html">
 <meta property="og:site_name" content="十元">
-<meta property="og:description" content="1075 PAT Judge (25 分)The ranklist of PAT is generated from the status list, which shows the scores of the submissions. This time you are supposed to generate the ranklist for PAT.">
+<meta property="og:description" content="1057 Stack (30 分)Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-04T14:24:56.240Z">
+<meta property="og:updated_time" content="2019-08-18T11:04:57.066Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A1075 PAT Judge (25 分)">
-<meta name="twitter:description" content="1075 PAT Judge (25 分)The ranklist of PAT is generated from the status list, which shows the scores of the submissions. This time you are supposed to generate the ranklist for PAT.">
+<meta name="twitter:title" content="A1057 Stack (30 分)">
+<meta name="twitter:description" content="1057 Stack (30 分)Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/04/A1075-PAT-Judge-25-分/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/18/1057-Stack-30-分/">
 
 
 
 
 
-  <title>A1075 PAT Judge (25 分) | 十元</title>
+  <title>A1057 Stack (30 分) | 十元</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/04/A1075-PAT-Judge-25-分/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/18/1057-Stack-30-分/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="三无的十元">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">A1075 PAT Judge (25 分)</h1>
+          <h1 class="post-title" itemprop="name headline">A1057 Stack (30 分)</h1>
         
 
         <div class="post-meta">
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-04T21:47:00+08:00">
-                2019-08-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-18T17:38:00+08:00">
+                2019-08-18
               </time>
             
 
@@ -351,7 +351,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.1k
                 </span>
               
 
@@ -367,7 +367,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  5
                 </span>
               
             </div>
@@ -388,118 +388,159 @@
       
 
       
-        <h3 id="1075-PAT-Judge-25-分"><a href="#1075-PAT-Judge-25-分" class="headerlink" title="1075 PAT Judge (25 分)"></a>1075 PAT Judge (25 分)</h3><p>The ranklist of PAT is generated from the status list, which shows the scores of the submissions. This time you are supposed to generate the ranklist for PAT.</p>
+        <h3 id="1057-Stack-30-分"><a href="#1057-Stack-30-分" class="headerlink" title="1057 Stack (30 分)"></a>1057 Stack (30 分)</h3><p>Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top position) and Pop (deleting the top element). Now you are supposed to implement a stack with an extra operation: PeekMedian – return the median value of all the elements in the stack. With N elements, the median value is defined to be the <code>(N/2)</code>-th smallest element if N is even, or <code>((N+1)/2)</code>-th if <code>N</code> is odd.</p>
 <a id="more"></a>
-<h4 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h4><p>Each input file contains one test case. For each case, the first line contains <code>3</code> positive integers, N (≤10<sup>4</sup> ), the total number of users, <code>K</code> (≤5), the total number of problems, and <code>M</code>(≤10<sup>5</sup>), the total number of submissions. It is then assumed that the user id’s are 5-digit numbers from 00001 to N, and the problem id’s are from 1 to K. The next line contains K positive integers <code>p[i]</code>(i=1, …, K), where <code>p[i]</code> corresponds to the full mark of the i-th problem. Then M lines follow, each gives the information of a submission in the following format:</p>
-<p>user_id problem_id partial_score_obtained<br>where partial_score_obtained is either <code>−1</code> if the submission cannot even pass the compiler, or is an integer in the range <code>[0, p[problem_id]]</code>. All the numbers in a line are separated by a space.</p>
-<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each test case, you are supposed to output the ranklist in the following format:</p>
-<p>rank user_id total_score <code>s[1] ... s[K]</code><br>where rank is calculated according to the total_score, and all the users with the same total_score obtain the same rank; and <code>s[i]</code> is the partial score obtained for the <code>i-th</code>problem. If a user has never submitted a solution for a problem, then <code>&quot;-&quot;</code>must be printed at the corresponding position. If a user has submitted several solutions to solve one problem, then the highest score will be counted.</p>
-<p>The ranklist must be printed in non-decreasing order of the ranks. For those who have the same rank, users must be sorted in nonincreasing order according to the number of perfectly solved problems. And if there is still a tie, then they must be printed in increasing order of their id’s. For those who has never submitted any solution that can pass the compiler, or has never submitted any solution, they must <code>NOT</code> be shown on the ranklist. It is guaranteed that at least one user can be shown on the ranklist.</p>
-<h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h4><pre><code>7 4 20
-20 25 25 30
-00002 2 12
-00007 4 17
-00005 1 19
-00007 2 25
-00005 1 20
-00002 2 2
-00005 1 15
-00001 1 18
-00004 3 25
-00002 2 25
-00005 3 22
-00006 4 -1
-00001 2 18
-00002 1 20
-00004 1 15
-00002 4 18
-00001 3 4
-00001 4 2
-00005 2 -1
-00004 2 0</code></pre><h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h4><pre><code>1 00002 63 20 25 - 18
-2 00005 42 20 0 22 -
-2 00007 42 - 25 - 17
-2 00001 42 18 18 4 2
-5 00004 40 15 0 25 -</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p> 唉，这道题不想让人吐槽了，本来好好写了代码，一直错，快要放弃的时候，找到错误了，结果无论怎么改，都是两个测试点不过，只有21分，气的想砸电脑。后面参考了柳神的博客，才发现她写的真的简单，膜柳神 <strong>QAQ</strong>。不说废话了</p>
-<ul>
-<li>题意大概是，给你一个pat的数据，让你排名  </li>
-<li>输入要求就不说了，输出有几个注意的点。</li>
-<li>1.如果编译不通过，输入会是-1。  </li>
-<li>2.编译通过但是是0分也要输出  </li>
-<li>3.按照总分递减顺序排名，如果总分相同，按照通过的题目数量递减排名，如果还是相同，按照id递增排序。</li>
-<li>4.如果没有回答任何题目或者回答了但是都是编译不通过的，也不会输出（非常重要）</li>
-</ul>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>用一个结构体存储用户的排名，总分，<code>id</code>，是否要输出等信息，这里结构体内用了一个向量来存储每一题的分数，并且在输入分数的时候，实时更新这个分数。<br>对于输入的分数，只要不是<code>-1</code>，我们就将它和已有分数比较。而且记录当前结构体的<code>show</code>为<code>true</code>,因为如果一旦有<code>-1</code>的情况，也就是编译错误或者没有做过这个题目，那么除非全为这类，不然一定会覆盖<code>-1</code>。<br>如果输入的分数为<code>-1</code>，我们将其记为<code>-2</code>，也就是编译出错的，后来在输出的时候好判断输出符号。<br>然后就是基本的遍历操作了。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre><code>#include&lt;cstdio&gt;
-#include&lt;algorithm&gt;
-#include&lt;vector&gt;
+<h4 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h4><p>Each input file contains one test case. For each case, the first line contains a positive integer <code>N</code> (≤10<sup>5</sup> ). Then<code>N</code>lines follow, each contains a command in one of the following <code>3</code> formats: </p>
+<pre><code>Push key
+Pop
+PeekMedian  </code></pre><p>where key is a positive integer no more than 10<sup>5</sup> .</p>
+<h4 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h4><p>For each Push command, insert key into the stack and output nothing. For each Pop or PeekMedian command, print in a line the corresponding returned value. If the command is invalid, print Invalid instead.</p>
+<h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h4><pre><code>17
+Pop
+PeekMedian
+Push 3
+PeekMedian
+Push 2
+PeekMedian
+Push 1
+PeekMedian
+Pop
+Pop
+Push 5
+Push 4
+PeekMedian
+Pop
+Pop
+Pop
+Pop</code></pre><h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h4><pre><code>Invalid
+Invalid
+3
+2
+2
+1
+2
+4
+4
+5
+3
+Invalid</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>要求你在栈原有的基础上，实现求栈内元素中位数的操作。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>如果简单的每次求中位数，都对栈内元素进行一次遍历然后计算，肯定会超时，因为题目是10<sup>5</sup>级别的。<br>参考晴神和柳神的代码，主要有两种思想，一是采用分块思想，一种是采用树状数组思想。  </p>
+<h5 id="分块："><a href="#分块：" class="headerlink" title="分块："></a>分块：</h5><p>分块思想有点类似hash表的做法，用一个<code>table</code>数组存储入栈的数字个数，比如<code>table[i]</code>存储<code>i</code>元素的个数，每入栈一个元素<code>i</code>，我们就<code>table[i]++</code>，而为了查找速度的快速，我们用一个小一点的分块数组<code>block[]</code>来存储一个区间内，栈内数字出现的个数，例如将整个<code>table</code>分成&radic;n块（向上取整），然后每一块记录&radic;n个元素中，刚刚存进去的元素个数。如果前<code>x</code>个block的和<code>sum</code>小于要找的中位数<code>k</code>，而前<code>x+1</code>个block的和大于<code>k</code>，说明中位数就在第block[x+1]中，通过计算在table中找到这个区间，然后在这个区间将table[y]一个一个加进<code>sum</code>，知道刚好等于<code>k</code>，则<code>y</code>的值即为中位数。  </p>
+<h5 id="树状数组："><a href="#树状数组：" class="headerlink" title="树状数组："></a>树状数组：</h5><p>树状数组可以直接解决前缀和的问题，我们用一个树状数组来存储入栈元素的个数，然后利用二分法查找前缀和<code>getSum</code>，就可以求出这个中位数的值。<br>具体树状数组的知识，可以参考博客<br><a href="https://www.cnblogs.com/acgoto/p/8583952.html" target="_blank" rel="noopener">https://www.cnblogs.com/acgoto/p/8583952.html</a><br>或者是B站up的视频<br><a href="https://www.bilibili.com/video/av18735440?from=search&amp;seid=16407771677412579767" target="_blank" rel="noopener">https://www.bilibili.com/video/av18735440?from=search&amp;seid=16407771677412579767</a><br>讲的都挺好的。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>分块  </p>
+<pre><code>#include&lt;cstdio&gt;
+#include&lt;stack&gt;
+#include&lt;cstring&gt;
 using namespace std;
-struct user{
-    int id,total=0,rank,passcount=0;//id 总分 排名 满分个数
-    vector&lt;int&gt;score;
-    bool show=false;//是否显示
-};
-bool cmp(user a,user b){//比较判断
-    if(a.total!=b.total)return a.total&gt;b.total;
-    else if(a.passcount!=b.passcount)return a.passcount&gt;b.passcount;
-    else return a.id&lt;b.id;
+const int maxn =100010;
+const int sqrN=316;
+stack&lt;int&gt; st;
+int block[sqrN];
+int table[maxn];
+void peekMedian(int k){
+    int sum=0;
+    int idx=0;
+    while(sum+block[idx]&lt;k){
+        sum+=block[idx++];
+    }
+    int num=idx*sqrN;
+    while(sum+table[num]&lt;k){
+        sum+=table[num++];
+    }
+    printf(&quot;%d\n&quot;,num);
+}
+void Push(int x){
+    st.push(x);
+    block[x/sqrN]++;
+    table[x]++;
+}
+void Pop(){
+    int x=st.top();
+    st.pop();
+    block[x/sqrN]--;
+    table[x]--;
+    printf(&quot;%d\n&quot;,x);
 }
 int main(){
-    int uNum,pNum,n;//参加人数 题目个数 记录个数
-    scanf(&quot;%d%d%d&quot;,&amp;uNum,&amp;pNum,&amp;n);
-    vector&lt;int&gt;full(pNum+1);//满分数组
-    vector&lt;user&gt;Users(uNum+1);
-    for(int i=1;i&lt;=pNum;i++){
-        scanf(&quot;%d&quot;,&amp;full[i]);
-    }
-    for(int i=1;i&lt;=uNum;i++){
-        Users[i].score.resize(pNum+1,-1);//初始化
-    }
-    int id,pth,score;
-    for(int i=1;i&lt;=n;i++){
-        scanf(&quot;%d%d%d&quot;,&amp;id,&amp;pth,&amp;score);
-        Users[id].id=id;
-        Users[id].score[pth]=max(Users[id].score[pth],score);//实时更新分数
-        if(score!=-1){
-            Users[id].show=true;
-        }else if(Users[id].score[pth]==-1){
-            Users[id].score[pth]=-2;
-        }
-    }
-    for(int i=1;i&lt;=uNum;i++){
-            for(int j=1;j&lt;=pNum;j++){
-                if(Users[i].score[j]!=-1&amp;&amp;Users[i].score[j]!=-2){
-                    Users[i].total+=Users[i].score[j];//计算总分
-                }
-                if(Users[i].score[j]==full[j]){
-                    Users[i].passcount++;//满分人数
-                }
+    int n,data;
+    char cmd[15];
+    memset(block,0,sizeof(block));
+    memset(table,0,sizeof(table));
+    scanf(&quot;%d&quot;,&amp;n);
+    for(int i=0;i&lt;n;i++){
+        scanf(&quot;%s&quot;,cmd);
+        if(cmd[1]==&apos;o&apos;){
+            if(st.empty()){
+                printf(&quot;Invalid\n&quot;);
+            }else 
+            Pop();
+        }else if(cmd[1]==&apos;u&apos;){
+            scanf(&quot;%d&quot;,&amp;data);
+            Push(data);
+        }else{
+            if(st.empty()){
+                printf(&quot;Invalid\n&quot;);
+            }else{
+                int k=(st.size()+1)/2;
+                peekMedian(k);
             }
         }
-    sort(Users.begin()+1,Users.end(),cmp);
-    for(int i=1;i&lt;=uNum;i++){
-        Users[i].rank=i;
-        if(i!=1&amp;&amp;Users[i].total==Users[i-1].total){
-            Users[i].rank=Users[i-1].rank;//计算排名
-        }
     }
-    for(int i=0;i&lt;=uNum;i++){
-        if(Users[i].show==true){
-            printf(&quot;%d %05d %d&quot;,Users[i].rank,Users[i].id,Users[i].total);
-            for(int j=1;j&lt;=pNum;j++){
-                if(Users[i].score[j]!=-1&amp;Users[i].score[j]!=-2)
-                printf(&quot; %d&quot;,Users[i].score[j]);
-                else if(Users[i].score[j]==-1)
-                printf(&quot; -&quot;);
-                else printf(&quot; 0&quot;);
+}</code></pre><p>树状数组  </p>
+<pre><code>#include&lt;cstdio&gt;
+#include&lt;stack&gt;
+using namespace std;
+#define lowbit(i) ((i)&amp;(-i))//lowbit()运算
+const int maxn=100010;
+stack &lt;int&gt; s;
+int c[maxn];
+void update(int x,int v){//更新树状数组
+    for(int i=x;i&lt;maxn;i+=lowbit(i)){
+        c[i]+=v;
+    }
+}
+int getSum(int x){//求前x个元素的和
+    int sum=0;
+    for(int i=x;i&gt;0;i-=lowbit(i)){
+        sum+=c[i];
+    }
+    return sum;
+}
+int peekMedian(){//二分法求中位数
+    int left=1,right=maxn,mid,k=(s.size()+1)/2;
+    while(left&lt;right){
+        mid=(left+right)/2;
+        if(getSum(mid)&gt;=k){
+            right=mid;
+        }else left=mid+1;
+    }
+    printf(&quot;%d\n&quot;,left);
+}
+int main(){
+    int n,data;
+    scanf(&quot;%d&quot;,&amp;n);
+    char cmd[10];
+    for(int i=0;i&lt;n;i++){
+        scanf(&quot;%s&quot;,cmd);
+        if(cmd[1]==&apos;u&apos;){
+            scanf(&quot;%d&quot;,&amp;data);
+            s.push(data);
+            update(data,1);
+        }else if(cmd[1]==&apos;o&apos;){
+            if(!s.empty()){
+                update(s.top(),-1);
+                printf(&quot;%d\n&quot;,s.top());
+                s.pop();
+            }else{
+                printf(&quot;Invalid\n&quot;);
             }
-            printf(&quot;\n&quot;);
+        }else {
+            if((!s.empty())){
+                peekMedian();
+            }else printf(&quot;Invalid\n&quot;);
         }
     }
     return 0;
-
-
-
 }</code></pre>
       
     </div>
@@ -522,7 +563,7 @@ int main(){
       
         <div class="post-tags">
           
-            <a href="/tags/PAT/" rel="tag"><i class="fa fa-tag"></i> PAT</a>
+            <a href="/tags/进军PAT/" rel="tag"><i class="fa fa-tag"></i> 进军PAT</a>
           
         </div>
       
@@ -535,8 +576,8 @@ int main(){
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/03/A1043-Is-It-a-Binary-Search-Tree-25-分/" rel="next" title="A1043 Is It a Binary Search Tree (25 分)">
-                <i class="fa fa-chevron-left"></i> A1043 Is It a Binary Search Tree (25 分)
+              <a href="/2019/08/10/A1003-Emergency-25-分/" rel="next" title="A1003 Emergency (25 分)">
+                <i class="fa fa-chevron-left"></i> A1003 Emergency (25 分)
               </a>
             
           </div>
@@ -544,10 +585,6 @@ int main(){
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/10/A1003-Emergency-25-分/" rel="prev" title="A1003 Emergency (25 分)">
-                A1003 Emergency (25 分) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -713,7 +750,7 @@ int main(){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1075-PAT-Judge-25-分"><span class="nav-number">1.</span> <span class="nav-text">1075 PAT Judge (25 分)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">Input Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output-Specification"><span class="nav-number">1.2.</span> <span class="nav-text">Output Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Input"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Input:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Output"><span class="nav-number">1.4.</span> <span class="nav-text">Sample Output:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题意"><span class="nav-number">1.5.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.6.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.7.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1057-Stack-30-分"><span class="nav-number">1.</span> <span class="nav-text">1057 Stack (30 分)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">Input Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output-Specification"><span class="nav-number">1.2.</span> <span class="nav-text">Output Specification:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Input"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Input:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sample-Output"><span class="nav-number">1.4.</span> <span class="nav-text">Sample Output:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题意"><span class="nav-number">1.5.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.6.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#分块："><span class="nav-number">1.6.1.</span> <span class="nav-text">分块：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#树状数组："><span class="nav-number">1.6.2.</span> <span class="nav-text">树状数组：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.7.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
             
 
           </div>
