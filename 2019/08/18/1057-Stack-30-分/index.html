@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="进军PAT,">
+  <meta name="keywords" content="PAT,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="1057 Stack (30 分)Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top">
-<meta name="keywords" content="进军PAT">
+<meta name="keywords" content="PAT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A1057 Stack (30 分)">
 <meta property="og:url" content="http://yoursite.com/2019/08/18/1057-Stack-30-分/index.html">
 <meta property="og:site_name" content="十元">
 <meta property="og:description" content="1057 Stack (30 分)Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T11:04:57.066Z">
+<meta property="og:updated_time" content="2019-08-23T14:37:05.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A1057 Stack (30 分)">
 <meta name="twitter:description" content="1057 Stack (30 分)Stack is one of the most fundamental data structures, which is based on the principle of Last In First Out (LIFO). The basic operations include Push (inserting an element onto the top">
@@ -428,120 +428,10 @@ Invalid</code></pre><h4 id="题意"><a href="#题意" class="headerlink" title="
 <h5 id="分块："><a href="#分块：" class="headerlink" title="分块："></a>分块：</h5><p>分块思想有点类似hash表的做法，用一个<code>table</code>数组存储入栈的数字个数，比如<code>table[i]</code>存储<code>i</code>元素的个数，每入栈一个元素<code>i</code>，我们就<code>table[i]++</code>，而为了查找速度的快速，我们用一个小一点的分块数组<code>block[]</code>来存储一个区间内，栈内数字出现的个数，例如将整个<code>table</code>分成&radic;n块（向上取整），然后每一块记录&radic;n个元素中，刚刚存进去的元素个数。如果前<code>x</code>个block的和<code>sum</code>小于要找的中位数<code>k</code>，而前<code>x+1</code>个block的和大于<code>k</code>，说明中位数就在第block[x+1]中，通过计算在table中找到这个区间，然后在这个区间将table[y]一个一个加进<code>sum</code>，知道刚好等于<code>k</code>，则<code>y</code>的值即为中位数。  </p>
 <h5 id="树状数组："><a href="#树状数组：" class="headerlink" title="树状数组："></a>树状数组：</h5><p>树状数组可以直接解决前缀和的问题，我们用一个树状数组来存储入栈元素的个数，然后利用二分法查找前缀和<code>getSum</code>，就可以求出这个中位数的值。<br>具体树状数组的知识，可以参考博客<br><a href="https://www.cnblogs.com/acgoto/p/8583952.html" target="_blank" rel="noopener">https://www.cnblogs.com/acgoto/p/8583952.html</a><br>或者是B站up的视频<br><a href="https://www.bilibili.com/video/av18735440?from=search&amp;seid=16407771677412579767" target="_blank" rel="noopener">https://www.bilibili.com/video/av18735440?from=search&amp;seid=16407771677412579767</a><br>讲的都挺好的。</p>
 <h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>分块  </p>
-<pre><code>#include&lt;cstdio&gt;
-#include&lt;stack&gt;
-#include&lt;cstring&gt;
-using namespace std;
-const int maxn =100010;
-const int sqrN=316;
-stack&lt;int&gt; st;
-int block[sqrN];
-int table[maxn];
-void peekMedian(int k){
-    int sum=0;
-    int idx=0;
-    while(sum+block[idx]&lt;k){
-        sum+=block[idx++];
-    }
-    int num=idx*sqrN;
-    while(sum+table[num]&lt;k){
-        sum+=table[num++];
-    }
-    printf(&quot;%d\n&quot;,num);
-}
-void Push(int x){
-    st.push(x);
-    block[x/sqrN]++;
-    table[x]++;
-}
-void Pop(){
-    int x=st.top();
-    st.pop();
-    block[x/sqrN]--;
-    table[x]--;
-    printf(&quot;%d\n&quot;,x);
-}
-int main(){
-    int n,data;
-    char cmd[15];
-    memset(block,0,sizeof(block));
-    memset(table,0,sizeof(table));
-    scanf(&quot;%d&quot;,&amp;n);
-    for(int i=0;i&lt;n;i++){
-        scanf(&quot;%s&quot;,cmd);
-        if(cmd[1]==&apos;o&apos;){
-            if(st.empty()){
-                printf(&quot;Invalid\n&quot;);
-            }else 
-            Pop();
-        }else if(cmd[1]==&apos;u&apos;){
-            scanf(&quot;%d&quot;,&amp;data);
-            Push(data);
-        }else{
-            if(st.empty()){
-                printf(&quot;Invalid\n&quot;);
-            }else{
-                int k=(st.size()+1)/2;
-                peekMedian(k);
-            }
-        }
-    }
-}</code></pre><p>树状数组  </p>
-<pre><code>#include&lt;cstdio&gt;
-#include&lt;stack&gt;
-using namespace std;
-#define lowbit(i) ((i)&amp;(-i))//lowbit()运算
-const int maxn=100010;
-stack &lt;int&gt; s;
-int c[maxn];
-void update(int x,int v){//更新树状数组
-    for(int i=x;i&lt;maxn;i+=lowbit(i)){
-        c[i]+=v;
-    }
-}
-int getSum(int x){//求前x个元素的和
-    int sum=0;
-    for(int i=x;i&gt;0;i-=lowbit(i)){
-        sum+=c[i];
-    }
-    return sum;
-}
-int peekMedian(){//二分法求中位数
-    int left=1,right=maxn,mid,k=(s.size()+1)/2;
-    while(left&lt;right){
-        mid=(left+right)/2;
-        if(getSum(mid)&gt;=k){
-            right=mid;
-        }else left=mid+1;
-    }
-    printf(&quot;%d\n&quot;,left);
-}
-int main(){
-    int n,data;
-    scanf(&quot;%d&quot;,&amp;n);
-    char cmd[10];
-    for(int i=0;i&lt;n;i++){
-        scanf(&quot;%s&quot;,cmd);
-        if(cmd[1]==&apos;u&apos;){
-            scanf(&quot;%d&quot;,&amp;data);
-            s.push(data);
-            update(data,1);
-        }else if(cmd[1]==&apos;o&apos;){
-            if(!s.empty()){
-                update(s.top(),-1);
-                printf(&quot;%d\n&quot;,s.top());
-                s.pop();
-            }else{
-                printf(&quot;Invalid\n&quot;);
-            }
-        }else {
-            if((!s.empty())){
-                peekMedian();
-            }else printf(&quot;Invalid\n&quot;);
-        }
-    }
-    return 0;
-}</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn =<span class="number">100010</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> sqrN=<span class="number">316</span>;</span><br><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; st;</span><br><span class="line"><span class="keyword">int</span> block[sqrN];</span><br><span class="line"><span class="keyword">int</span> table[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">peekMedian</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> idx=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(sum+block[idx]&lt;k)&#123;</span><br><span class="line">        sum+=block[idx++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> num=idx*sqrN;</span><br><span class="line">    <span class="keyword">while</span>(sum+table[num]&lt;k)&#123;</span><br><span class="line">        sum+=table[num++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,num);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    st.push(x);</span><br><span class="line">    block[x/sqrN]++;</span><br><span class="line">    table[x]++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=st.top();</span><br><span class="line">    st.pop();</span><br><span class="line">    block[x/sqrN]--;</span><br><span class="line">    table[x]--;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,data;</span><br><span class="line">    <span class="keyword">char</span> cmd[<span class="number">15</span>];</span><br><span class="line">    <span class="built_in">memset</span>(block,<span class="number">0</span>,<span class="keyword">sizeof</span>(block));</span><br><span class="line">    <span class="built_in">memset</span>(table,<span class="number">0</span>,<span class="keyword">sizeof</span>(table));</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>,cmd);</span><br><span class="line">        <span class="keyword">if</span>(cmd[<span class="number">1</span>]==<span class="string">'o'</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(st.empty())&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Invalid\n"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> </span><br><span class="line">            Pop();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cmd[<span class="number">1</span>]==<span class="string">'u'</span>)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;data);</span><br><span class="line">            Push(data);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(st.empty())&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Invalid\n"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">int</span> k=(st.size()+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">                peekMedian(k);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>树状数组  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lowbit(i) ((i)&amp;(-i))<span class="comment">//lowbit()运算</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">100010</span>;</span><br><span class="line"><span class="built_in">stack</span> &lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"><span class="keyword">int</span> c[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> v)</span></span>&#123;<span class="comment">//更新树状数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=x;i&lt;maxn;i+=lowbit(i))&#123;</span><br><span class="line">        c[i]+=v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="comment">//求前x个元素的和</span></span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=x;i&gt;<span class="number">0</span>;i-=lowbit(i))&#123;</span><br><span class="line">        sum+=c[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">peekMedian</span><span class="params">()</span></span>&#123;<span class="comment">//二分法求中位数</span></span><br><span class="line">    <span class="keyword">int</span> left=<span class="number">1</span>,right=maxn,mid,k=(s.size()+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">        mid=(left+right)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(getSum(mid)&gt;=k)&#123;</span><br><span class="line">            right=mid;</span><br><span class="line">        &#125;<span class="keyword">else</span> left=mid+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,left);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,data;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    <span class="keyword">char</span> cmd[<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>,cmd);</span><br><span class="line">        <span class="keyword">if</span>(cmd[<span class="number">1</span>]==<span class="string">'u'</span>)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;data);</span><br><span class="line">            s.push(data);</span><br><span class="line">            update(data,<span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cmd[<span class="number">1</span>]==<span class="string">'o'</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!s.empty())&#123;</span><br><span class="line">                update(s.top(),<span class="number">-1</span>);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s.top());</span><br><span class="line">                s.pop();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Invalid\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>((!s.empty()))&#123;</span><br><span class="line">                peekMedian();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"Invalid\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -563,7 +453,7 @@ int main(){
       
         <div class="post-tags">
           
-            <a href="/tags/进军PAT/" rel="tag"><i class="fa fa-tag"></i> 进军PAT</a>
+            <a href="/tags/PAT/" rel="tag"><i class="fa fa-tag"></i> PAT</a>
           
         </div>
       
@@ -585,6 +475,10 @@ int main(){
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/23/A1089-Insert-or-Merge-25-分/" rel="prev" title="A1089 Insert or Merge (25 分)">
+                A1089 Insert or Merge (25 分) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -665,7 +559,7 @@ int main(){
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
