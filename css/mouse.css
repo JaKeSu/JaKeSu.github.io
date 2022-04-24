@@ -1,0 +1,9 @@
+body {
+    cursor: url("images/favicon2"),
+        default;
+}
+a,
+img {
+    cursor: url("images/favicon2"),
+        default;
+}
